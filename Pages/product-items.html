@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="shortcut icon" href="/sources/imgs/home/short-cut.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/sources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/sources/cssFolder/index.css" />
+    <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="/sources/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .price {
+            font-size: 20px;
+            color: #BD1E2D;
+            line-height: 24px;
+            font-family: inherit;
+            font-weight: 700;
+        }
+
+        .custom-link {
+            display: inline-block;
+            /* Để thẻ a là dạng block inline */
+            text-decoration: none;
+            /* Bỏ gạch chân */
+            color: white;
+            /* Màu chữ */
+        }
+
+        .custom-link span {
+            display: block;
+            /* Các span sẽ được xếp chồng lên nhau */
+        }
+
+        .product-policises {
+            list-style-type: none;
+        }
+
+        .product-policises li {
+            border-bottom: 1px dashed;
+            padding: 5px;
+        }
+
+        .product-policises li:last-child {
+            border: none;
+        }
+
+        .hotline-pro {
+            list-style-type: none;
+        }
+
+        .hotline-pro li {
+            padding: 5px;
+        }
+
+        .custom-li {
+            display: inline-block;
+            align-items: center;
+        }
+
+        .custom-li span {
+            display: block;
+        }
+    </style>
+</head>
+
+<body style="background-color: #eae5d6;">
+    <!-- Custom Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"> <!-- modal-dialog-centered để modal xuất hiện giữa màn hình -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Xác nhận mua hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="confirmBuy">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app">
+        <header class="header_content">
+            <!-- Phần logo và tính năng header -->
+            <div
+                class="header_top d-flex flex-row align-items-center justify-content-around text-center text-secondary">
+                <div class="header_top_logo" style="padding-left: 25px" id="top">
+                    <a href="../index.html"><img src="/sources/imgs/home/logo.png" width="150px" alt="" /></a>
+                </div>
+                <div class="col-md-7 mx-auto">
+                    <div class="input-group">
+                        <input onkeypress="searchHandle(event)" id="header-search"
+                            class="form-control border-end-0 border rounded-pill header__search-input" type="search"
+                            placeholder="Vui lòng nhập sản phẩm tìm kiếm" />
+                        <span class="input-group-append">
+                            <button onclick="searchClick(event)"
+                                class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5"
+                                type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                        <!-- History search box -->
+                        <div class="header__search-history">
+                            <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>
+                            <ul class="header__search-history-list">
+                                <!-- <li class="header__search-history-item">
+                        <a href="#">
+                          BẬT MÍ 5.5 - SĂN TRƯỚC MÃ 5.5
+                          <img src="https://cf.shopee.vn/file/491389dce9eabc3510a3e8a21cc40ef7" alt="Sale" />
+                          <i class="fas fa-times"></i>
+                        </a>
+                      </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="header_top_function">
+                    <ul class="d-flex flex-row list-group" style="margin-right: 20px">
+                        <li class="list-group-item text-secondary boder-none text-white poiter">
+                            <div class="tnh-country-flag">
+                                <img src="https://s.alicdn.com/@u/mobile/g/common/flags/1.0.0/assets/vn.png"
+                                    height="20px" loading="lazy" />
+                                <span> VN <i class="fas fa-angle-down"></i></span>
+                            </div>
+                        </li>
+                        <li onmouseenter="showListMess()"
+                            class="list-group-item text-secondary boder-none text-white poiter mess-icon-container">
+                            <span><i class="fas fa-comments"></i></span>
+                            <div class="mess-container">
+                                <h2 class="text-secondary" style="margin-bottom: 8px;">Tin nhắn</h2>
+                                <!-- <p class="text-secondary">Không có tin nhắn nào</p> -->
+                                <ul class="mess-box"></ul>
+                            </div>
+                        </li>
+                        <li onmouseenter="showListNotice()"
+                            class="list-group-item text-secondary boder-none text-white header__navbar-item--has-notify poiter">
+                            <span><i class="fas fa-bell"></i></span>
+                            <!-- Header Notification  -->
+                            <div class="header__notify">
+                                <header class="header__notify-header">
+                                    <h3>Thông báo mới nhận</h3>
+                                </header>
+                                <ul class="header__notify-list"></ul>
+                                <footer class="header__notify-footer">
+                                    <a href="#" class="header__notify-footer-btn">
+                                        Xem thêm
+                                    </a>
+                                </footer>
+                            </div>
+                        </li>
+                        <li onmouseenter="showCart()" class="list-group-item text-secondary boder-none text-white">
+                            <div class="header__cart-wrap">
+                                <i onclick="goProfile()" class="header__cart-icon fas fa-shopping-cart"></i>
+
+                                <div class="header__cart-list">
+                                    <!-- <h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+                        
+                        <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+                        <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>
+                        <ul class="header__cart-list-item"></ul>
+                        
+                        <a href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a> -->
+                                </div>
+                                <span class="header__cart-notice"></span>
+                            </div>
+                        </li>
+                        <li id="stateLogin"
+                            class="list-group-item text-secondary rounded-pill bg-orange text-white user-icon-container poiter">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Phần navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="ftco-nav">
+                        <ul class="navbar-nav m-auto">
+                            <li class="nav-item active">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="product.html" class="nav-link">Product</a>
+                            </li>
+                            <!-- <li class="nav-item"><a href="#information" class="nav-link">Blog</a></li> -->
+                            <li class="nav-item">
+                                <a href="#footer" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- Toast add/ remove cart -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 20;">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img id="stateToast" src="/sources/imgs/home/success.png" class="rounded me-2" alt="..."
+                        width="15px">
+                    <strong class="me-auto">Thông báo</strong>
+                    <small>Vừa xong</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body"></div>
+            </div>
+        </div>
+        <div class="container-fluid mt-5 mb-5">
+            <div class="row">
+                <!-- Phần 1 (4/12) -->
+                <div class="col-md-4">
+                    <div class="container" style="display: flow-root;">
+                        <div id="slice-container" class="carousel slide" data-bs-ride="carousel">
+
+                            <!-- Indicators/dots -->
+                            <div class="carousel-indicators"></div>
+
+                            <!-- The slideshow/carousel -->
+                            <div class="carousel-inner"></div>
+
+                            <!-- Left and right controls/icons -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#slice-container"
+                                data-bs-slide="prev" style="padding-bottom: 25%;">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#slice-container"
+                                data-bs-slide="next" style="padding-bottom: 25%;">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Phần 2 (4/12) -->
+                <div class="col-md-4">
+                    <div class="container">
+                        <div id="info">
+                            <h5>[120W] Đèn Đường Năng Lượng Mặt Trời Liền Thể LT6120 Nhiều Khoang Kitawa</h5>
+                            <span>Loại sản phẩm: <a href="">KITAWA</a></span>
+                            <span>Vị trí lắp đặt: <a href="">LT6120</a></span>
+                            <div><span class="price">599.000 VND</span></div>
+                        </div>
+
+                        <div style="padding-top: 14px; border: 1px dashed; padding: 10px; margin-top: 10px;">
+                            <div>
+                                <span
+                                    style="padding: 5px 4px; background-color: #66728b; color: #fff;font-size: 14px; font-weight: 700; border-radius: 3px;">TIÊU
+                                    CHUẨN ISO 9001 : 2015</span>
+                            </div>
+                            <div style="padding-top: 10px; border-radius: 3px;">
+                                <ul style="background-color: #EEEEEE; border-radius: 3px;">
+                                    <li>
+                                        <span style="font-size: 14px;">
+                                            Xem hướng dẫn lắp đặt
+                                            <a href="">(Xem chi tiết)</a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="font-size: 14px;">
+                                            Hình ảnh 10.000 khách hàng
+                                            <a href="">(Xem chi tiết)</a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="font-size: 14px;">
+                                            Dự án thi công lớn đã triển khai
+                                            <a href="">(Xem chi tiết)</a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="font-size: 14px;">
+                                            Hồ sơ năng lực KITAWA
+                                            <a href="">(Xem chi tiết)</a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="font-size: 14px;">
+                                            Thiết kế chiếu sáng miễn phí
+                                            <a href="">(Xem chi tiết)</a>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="container mt-5 d-flex">
+                            <div class="text-center fs-5">Số&nbsp;lượng</div>
+
+                            <div class="d-flex justify-content-center">
+                                <div class="input-group" style="max-width: 70%; height: 50%;">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="decreaseQuantity()"><i class="bi bi-dash"></i></button>
+                                    <input type="text" class="form-control text-center" id="productQuantity" value="1">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="increaseQuantity()"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="buyButton"
+                            style="background-color: #061b48; border-radius: 3px; padding: 4px 15px; margin-top: 10px; text-align: center;">
+                            <span class="custom-link" href="#"
+                                style="font-weight: 700;padding: 7px 0;cursor: pointer;">MUA
+                                NGAY</span>
+                        </div>
+
+                        <div class="mt-2" id="addCartButton"
+                            style="background-color: #fff; border-radius: 3px;padding: 11px 15px; border: 1px solid; text-align: center;cursor: pointer;">
+                            <span style="color: #061b48;text-decoration: none; font-weight: 700;">THÊM VÀO GIỎ</span>
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Phần 3 (2/12) -->
+                <div class="col-md-4">
+                    <div class="container">
+                        <div style="background-color: #EEEEEE; border-radius: 3px;">
+                            <ul class="product-policises" style="padding: 10px;">
+                                <li>Giao hàng miễn phí toàn quốc (Kiểm tra hàng trước khi thanh toán)</li>
+                                <li>Lỗi kỹ thuật được đổi mới trong thời gian 30 ngày kể từ ngày nhận</li>
+                                <li>Bảo hành toàn quốc 3 năm về đèn & 5 năm tấm quang điện</li>
+                                <li>Dịch vụ chăm sóc khách hàng miễn phí hỗ trợ 8h00 - 21h00 tất cả các ngày trong tuần
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="background-color: #EEEEEE; border-radius: 3px;">
+                            <ul class="hotline-pro" style="padding: 10px;">
+                                <li class="custom-li">
+                                    <span>Tổng đài hỗ trợ bán hàng</span>
+                                    <span style="color: #d0aa05">0943 999 539</span>
+                                    <span>(08:00-22:00 tất cả các ngày trong tuần)</span>
+                                </li>
+                                <li class="custom-li">
+                                    <span>Tổng đài hỗ trợ kênh sỉ - phân phối</span>
+                                    <span style="color: #d0aa05">0943 999 539</span>
+                                </li>
+                                <li class="custom-li">
+                                    <span>Tổng đài hỗ trợ dự án - công trình</span>
+                                    <span style="color: #d0aa05">0943 999 539</span>
+                                </li>
+                                <li? class="custom-li">
+                                    <span>Tổng đài bảo hành - khiếu nại</span>
+                                    <span style="color: #d0aa05">0943 999 539</span>
+                                    <span>Hỗ trợ cước phí 1.000đ/phút</span>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phần Footer -->
+        <footer class="bg-dark text-center text-lg-start text-white" id="footer">
+            <div class="container p-4">
+                <div class="row mt-4">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Chính sách</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-user-lock fa-fw fa-sm me-2"></i>Chính sách bảo mật</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Chính sách vận chuyển</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-hands-helping fa-fw fa-sm me-2"></i>Chính sách đổi trả</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-book fa-fw fa-sm me-2"></i>Điều
+                                    khoản sử dụng</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Kết nối với chúng tôi</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fab fa-facebook-f fa-fw fa-sm me-2"></i>Facebook</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fab fa-instagram fa-fw fa-sm me-2"></i>Instagram</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fab fa-twitter fa-fw fa-sm me-2"></i>Twitter</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fab fa-youtube fa-fw fa-sm me-2"></i>YouTube</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-school fa-fw fa-sm me-2"></i>Trường
+                                    đại học Cần Thơ</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-road fa-fw fa-sm me-2"></i>Khu II,
+                                    Đ. 3 Tháng 2, Xuân Khánh, Ninh Kiều, Cần Thơ</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-map-marker-alt fa-fw fa-sm me-2"></i>Trường CNTT-TT</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Hỗ trợ khách hàng</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-phone-alt fa-fw fa-sm me-2"></i>Hotline: +84 123 456 789
+                                    (24/7)</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-envelope fa-fw fa-sm me-2"></i>Email: thelightshop@gmail.com</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white text-decoration-none"><i
+                                        class="fas fa-question fa-fw fa-sm me-2"></i>Câu
+                                    hỏi thường gặp (FAQ)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <a href="#top" class="scroll-top-btn" id="top-button">
+                <i class="fas fa-arrow-alt-circle-up"></i>
+            </a>
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2024 CT188:
+                <a class="text-white" href="#">Nhóm 7</a>
+            </div>
+        </footer>
+    </div>
+    <script>
+        function increaseQuantity() {
+            let quantityInput = document.getElementById('productQuantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decreaseQuantity() {
+            let quantityInput = document.getElementById('productQuantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+    </script>
+    <script>
+        // Kiểm tra đã đăng nhập chưa
+        window.onload = (e) => {
+            if (typeof localStorage["searchData"] === "undefined") {
+                localStorage.setItem("searchData", JSON.stringify([]));
+            }
+            if (typeof localStorage["curSearch"] === "undefined") {
+                localStorage.setItem("curSearch", "");
+            }
+            if (typeof localStorage["currentUser"] === "undefined") {
+                localStorage.setItem("currentUser", "-1");
+            }
+        }
+        const curUser = window.localStorage.getItem("currentUser");
+        // reset trang khi đổi trạng thái đăng nhập
+        window.addEventListener("storage", (event) => {
+            if (event.key === 'currentUser' && event.newValue !== curUser) location.reload();
+        });
+
+
+        // Lấy danh sách user và sản phẩm
+        const userList = JSON.parse(window.localStorage.getItem("userList")) || [];
+        const productInfoList = JSON.parse(localStorage.getItem('productList')) || [];
+        let userActive = userList[parseInt(curUser)];
+        if (userActive) {
+            let temp = userActive.data.cart.length;
+            const headerNotice = document.querySelector('.header__cart-notice');
+            if (temp > 0) {
+                headerNotice.style.display = "block";
+                headerNotice.innerText = `${temp}`;
+            } else headerNotice.style.display = "none";
+        }
+
+        // Trạng thái đăng nhập
+        document.addEventListener('DOMContentLoaded', () => {
+            var userState = document.querySelector('#stateLogin');
+            if (curUser == "-1") {
+                userState.innerHTML = `<i class="fas fa-user"></i>
+                  <span onclick="toLogin(event)">Login</span>
+              <div class="login-container" >
+                <h2 class="text-secondary">Đăng nhập để tiếp tục</h2>
+                <button class="sign-in-btn rounded-pill "onclick="toLogin(event)">Đăng nhập</button>
+                <p class="text-secondary">Hoặc đăng kí tài khoản mới:</p>
+                <button class="sign-in-btn rounded-pill" onclick="toSignup(event)">Đăng kí</button>
+                <p class="agreement">
+                  <a href="#">Chính sách thành viên </a> và
+                  <a href="#">chính sách quyền riêng tư của TheLight.com.</a>
+                </p>`;
+            }
+            else {
+                userState.innerHTML = `<li class="header__navbar-item header__navbar-user">
+                                <img src="../sources/imgs/home/user.jpg" alt=""
+                                    class="header__navbar-user-img">
+                                <span class="header__navbar-user-name">${userActive.fullName}</span>
+                                <ul class="header__navbar-user-menu">
+                                    <li class="header__navbar-user-item">
+                                        <a href="profile.html" onclick="stateProfile('user')">Tài khoản của tôi</a>
+                                    </li>
+                                    <li class="header__navbar-user-item header__navbar-user-item--separate">
+                                        <a href="#" onclick="logout()">Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            </li>`;
+            }
+        })
+
+        // Tin nhắn
+        var showListMess = (e) => {
+            const ulMess = document.querySelector('.mess-box');
+            if (curUser == "-1") {
+                if (!ulMess.querySelector('.header__mess-item')) {
+                    let li = document.createElement('li');
+                    li.classList.add("header__mess-item", "header__mess-item--viewed");
+                    li.innerHTML = `<a onclick="toLogin(event)" class='header__mess-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem tin nhắn</a>`;
+                    ulMess.appendChild(li);
+                }
+            } else {
+                if (!ulMess.querySelector('p')) ulMess.innerHTML = `<p class="text-secondary">Không có tin nhắn nào</p>`;
+            }
+        }
+        // Thông báo
+        let currentNoticeCount = 4;
+        var showListNotice = (e) => {
+            const ulMess = document.querySelector('.header__notify-list');
+            const messFooter = document.querySelector(".header__notify-footer-btn");
+
+            if (curUser == "-1") {
+                messFooter.classList.remove("show");
+                if (!ulMess.querySelector('.header__notify-item')) {
+                    let li = document.createElement('li');
+                    li.classList.add("header__notify-item", "header__notify-item--viewed");
+                    li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem thông báo</a>`;
+                    ulMess.appendChild(li);
+                }
+            } else {
+                ulMess.innerHTML = "";
+                let productOfNoctify = productInfoList.filter(product =>
+                    userActive.data.notificationsReceived.some(noticeItem => noticeItem.item === product.id)
+                );
+                for (let i = userActive.data.notificationsReceived.length - 1; i >= Math.max(0, userActive.data.notificationsReceived.length - currentNoticeCount); i--) {
+                    let li = document.createElement('li');
+                    li.classList.add("header__notify-item", "header__notify-item--viewed");
+                    let temp = productOfNoctify.find(product => product.id == userActive.data.notificationsReceived[i].item);
+                    if (userActive.data.notificationsReceived[i].state == 1) {
+                        li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Đang trên đường vận chuyển!</span>
+                      </div>
+                    </a>`;
+                        ulMess.appendChild(li);
+                    } else {
+                        li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Hiện không thể đáp ứng đơn hàng!</span>
+                      </div>
+                    </a>`;
+                        ulMess.appendChild(li);
+                    }
+                }
+                let li = document.createElement('li');
+                li.classList.add("header__notify-item", "header__notify-item--viewed");
+                li.innerHTML = `<a href="#" class="header__notify-link">
+                    <img src="/sources/imgs/home/notice_welcom.webp" alt=""
+                      class="header__notify-img" />
+                    <div class="header__notify-info">
+                      <span class="header__notify-name">Chào mừng bạn đến với The Light Shop</span>
+                      <span class="header__notify-description">Rất vui được phục vụ bạn</span>
+                    </div>
+                  </a>`;
+                ulMess.appendChild(li);
+
+                messFooter.classList.add("show");
+            }
+        };
+        document.querySelector('.header__notify-footer-btn').addEventListener('click', (event) => {
+            event.preventDefault();
+            currentNoticeCount += 5;
+            showListNotice();
+        });
+        //  Giỏ hàng 
+        var goProfile = () => {
+            if (curUser != "-1") {
+                localStorage.setItem("stateProfile", "cart")
+                window.location.href = "profile.html"
+            }
+        }
+        var showCart = () => {
+            const cartContainer = document.querySelector('.header__cart-wrap');
+            const cartList = document.querySelector('.header__cart-list');
+            cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>`;
+
+            if (curUser == "-1") {
+                let ul = document.createElement('ul');
+                ul.classList.add("header__cart-list-item");
+                cartList.appendChild(ul);
+
+                let li = document.createElement('li');
+                li.classList.add("header__notify-item", "header__notify-item--viewed");
+                li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem sản phẩm</a>`;
+                ul.appendChild(li);
+
+                document.querySelector('.header__cart-notice').style.display = "none";
+            } else {
+                let productOfCart = productInfoList.filter(product =>
+                    userActive.data.cart.some(cartItem => cartItem.item === product.id)
+                );
+
+                if (productOfCart.length === 0) {
+                    cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+          <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+          <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>`;
+                    document.querySelector('.header__cart-notice').style.display = "none";
+                } else {
+                    let ul = document.createElement('ul');
+                    ul.classList.add("header__cart-list-item");
+                    cartList.appendChild(ul);
+
+                    let a = document.createElement('a');
+                    a.classList.add("header__cart-view-cart", "btn", "btn--primary");
+                    a.setAttribute("href", "/Pages/profile.html");
+                    a.innerText = "Xem giỏ hàng";
+                    a.onclick = (event) => stateProfile("cart", event);
+                    cartList.appendChild(a);
+
+                    const ulCart = document.querySelector('.header__cart-list-item');
+                    ulCart.innerHTML = "";
+
+                    const headerNotice = document.querySelector('.header__cart-notice');
+                    headerNotice.style.display = "block";
+                    headerNotice.innerText = `${userActive.data.cart.length}`;
+
+                    for (let i = userActive.data.cart.length - 1; i >= Math.max(0, userActive.data.cart.length - 5); i--) {
+                        let temp = productOfCart.find(product => product.id == userActive.data.cart[i].item);
+                        let li = document.createElement('li');
+                        li.classList.add("header__cart-item");
+                        li.onclick = (event) => goProduct(temp.id)
+                        li.innerHTML = `
+          <img src="/sources/Data/${temp.id}/1.webp" alt="" class="header__cart-img" />
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${temp.nameProduct}</h5>
+              <div class="header__cart-item-price-wrap">
+                <span class="header__cart-item-price">${formatNumber(temp.price)} VND</span>
+                <span class="header__cart-item-multiply">x</span>
+                <span class="header__cart-item-cnt">${userActive.data.cart[i].quantity}</span>
+              </div>
+            </div>
+            <div class="header__cart-item-body">
+              <span class="header__cart-item-description">Phân loại: ${temp.type}</span>
+              <span class="header__cart-item-remove" onclick="delCartItem('${temp.id}','${temp.nameProduct}',event)">Xóa</span>
+            </div>
+          </div>`;
+                        ulCart.appendChild(li);
+                    }
+                }
+            }
+        };
+        var stateProfile = (sta, event) => {
+            localStorage.setItem("stateProfile", sta);
+        }
+        var addCartItem = (itemId, itemName, event, increase = 1) => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (curUser == "-1") {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/error.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+            } else {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/success.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Thêm ${itemName} thành công!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+                const userCart = userList[parseInt(curUser)].data.cart;
+                const existingItem = userCart.find(item => item.item === itemId);
+                if (existingItem) {
+                    existingItem.quantity += parseInt(increase);
+                } else {
+                    userCart.push({ item: itemId, quantity: parseInt(increase) });
+                }
+
+                localStorage.setItem("userList", JSON.stringify(userList));
+                if (userActive) {
+                    let temp = userActive.data.cart.length;
+                    const headerNotice = document.querySelector('.header__cart-notice');
+                    if (temp > 0) {
+                        headerNotice.style.display = "block";
+                        headerNotice.innerText = `${temp}`;
+                    } else headerNotice.style.display = "none";
+                }
+            }
+        }
+        var subCartItem = (itemId, itemName, event, decrease = 1) => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (curUser == "-1") {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/error.png";
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+                toast.show();
+            } else {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/success.png";
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Đã bớt ${itemName} thành công!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+                toast.show();
+
+                const userCart = userList[parseInt(curUser)].data.cart;
+                const existingItem = userCart.find(item => item.item === itemId);
+
+                if (existingItem) {
+                    existingItem.quantity -= decrease;
+                    if (existingItem.quantity <= 0) {
+                        const itemIndex = userCart.indexOf(existingItem);
+                        if (itemIndex > -1) {
+                            userCart.splice(itemIndex, 1);
+                        }
+                    }
+                }
+
+                localStorage.setItem("userList", JSON.stringify(userList));
+
+                if (userActive) {
+                    let temp = userActive.data.cart.length;
+                    const headerNotice = document.querySelector('.header__cart-notice');
+                    if (temp > 0) {
+                        headerNotice.style.display = "block";
+                        headerNotice.innerText = `${temp}`;
+                    } else headerNotice.style.display = "none";
+                }
+            }
+        }
+        var delCartItem = (itemId, itemName, event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (curUser == "-1") {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/error.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+            } else {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/success.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Xóa ${itemName} thành công!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+                userList[parseInt(curUser)].data.cart = userList[parseInt(curUser)].data.cart.filter(item => item.item !== itemId);
+                localStorage.setItem("userList", JSON.stringify(userList));
+                if (userActive) {
+                    let temp = userActive.data.cart.length;
+                    const headerNotice = document.querySelector('.header__cart-notice');
+                    if (temp > 0) {
+                        headerNotice.style.display = "block";
+                        headerNotice.innerText = `${temp}`;
+                    } else headerNotice.style.display = "none";
+                }
+                showCart();
+            }
+        };
+        var addShopItem = (itemId, itemName, event, increase = 1) => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (curUser == "-1") {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/error.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+            } else {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/success.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Đang chờ ${itemName} được xác nhận!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+                const userCart = userList[parseInt(curUser)].data.wait;
+                userCart.push({ item: itemId, quantity: parseInt(increase) });
+
+                localStorage.setItem("userList", JSON.stringify(userList));
+                if (userActive) {
+                    let temp = userActive.data.cart.length;
+                    const headerNotice = document.querySelector('.header__cart-notice');
+                    if (temp > 0) {
+                        headerNotice.style.display = "block";
+                        headerNotice.innerText = `${temp}`;
+                    } else headerNotice.style.display = "none";
+                }
+            }
+        }
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Lắng nghe sự kiện cuộn lên
+        window.onscroll = function () {
+            let topButton = document.getElementById("top-button");
+            if (
+                document.body.scrollTop > 200 ||
+                document.documentElement.scrollTop > 200
+            ) {
+                topButton.classList.add("show");
+            } else {
+                topButton.classList.remove("show");
+            }
+        };
+
+        // Đăng xuất
+        var logout = () => {
+            window.localStorage.setItem('currentUser', "-1");
+            if (typeof localStorage["adClosedDate"] !== "undefined") localStorage.removeItem("adClosedDate");
+            if (typeof localStorage["currentPage"] !== "undefined") localStorage.removeItem("currentPage");
+            window.localStorage.setItem('searchData', JSON.stringify([]));
+            location.reload();
+        }
+        // xư kiện đăng nhập đăng xuất
+        var toLogin = (e) => {
+            window.localStorage.setItem("currentPage", location.pathname+location.search);
+            window.location.href = "login.html";
+        }
+        var toSignup = (e) => {
+            window.localStorage.setItem("currentPage", location.pathname+location.search);
+            window.location.href = "signup.html";
+        }
+
+        // Search input
+        var searchData;
+        const search = document.querySelector('#header-search');
+        const ulSearch = document.querySelector('.header__search-history-list');
+        var showHistory = (e) => {
+            ulSearch.innerHTML = "";
+            if (curUser == "-1") searchData = JSON.parse(localStorage.getItem("searchData"));
+            else searchData = userActive.data.historySearch;
+            for (let i = searchData.length - 1; i >= Math.max(0, searchData.length - 5); i--) {
+                let li = document.createElement('li');
+                li.classList.add('header__search-history-item');
+                li.innerHTML = `<a  href="#" onclick="searchItem(this)">${searchData[i]}<i class="fas fa-times" onclick=delHistory(${i},event)></i></a>`;
+                ulSearch.appendChild(li);
+            }
+        }
+        var delHistory = (index, event) => {
+            event.stopPropagation();
+            if (curUser == "-1") {
+                searchData.splice(index, 1);
+                window.localStorage.setItem("searchData", JSON.stringify(searchData));
+            }
+            else {
+                userList[parseInt(curUser)].data.historySearch.splice(index, 1);
+                window.localStorage.setItem("userList", JSON.stringify(userList));
+            }
+            showHistory();
+        }
+
+
+        const searchHistory = document.querySelector('.header__search-history');
+        search.addEventListener('focus', () => {
+            searchHistory.style.display = 'block';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.header__search-input') && !event.target.closest('.header__search-history') && !event.target.closest('.header__search-history-item')) {
+                searchHistory.style.display = 'none';
+            }
+        });
+        search.onfocus = showHistory();
+
+
+        var searchHandle = (e) => {
+            if (e.key === "Enter") {
+                search.value = search.value.trim();
+                if (search.value !== "") {
+                    if (curUser == "-1") {
+                        searchData.push(search.value);
+                        window.localStorage.setItem("searchData", JSON.stringify(searchData));
+                    } else {
+                        userList[parseInt(curUser)].data.historySearch.push(search.value);
+                        window.localStorage.setItem("userList", JSON.stringify(userList));
+                    }
+                    window.localStorage.setItem("curSearch", search.value);
+                    search.value = "";
+                    window.location.href = "product.html";
+                }
+            }
+        }
+        var searchClick = (e) => {
+            search.value = search.value.trim();
+            if (search.value !== "") {
+                if (curUser == "-1") {
+                    searchData.push(search.value);
+                    window.localStorage.setItem("searchData", JSON.stringify(searchData));
+                } else {
+                    userList[parseInt(curUser)].data.historySearch.push(search.value);
+                    window.localStorage.setItem("userList", JSON.stringify(userList));
+                }
+                window.localStorage.setItem("curSearch", search.value);
+                search.value = "";
+                window.location.href = "product.html";
+            }
+        }
+        var searchItem = (item) => {
+            window.localStorage.setItem("curSearch", item.textContent);
+            window.location.href = "product.html";
+        }
+        // đi tới trang chi tiết sản phẩm
+        var goProduct = (index) => {
+            window.open('product-items.html?id=' + index, '_self');
+        }
+        const url = new URLSearchParams(window.location.search);
+        const idItem = url.get("id");
+        if (!idItem) window.location.replace("product.html");
+        let dataItem = productInfoList.find(product => product.id == idItem)
+        const carouselIndicators = document.querySelector('.carousel-indicators');
+        const carouselInner = document.querySelector('.carousel-inner');
+
+        carouselIndicators.innerHTML = `
+        <img src="../sources/Data/${idItem}/1.webp"
+                                data-bs-target="#slice-container" data-bs-slide-to="0" class="active"
+                                style="width: 20%; height: 20%;"></img>
+                            <img src="../sources/Data/${idItem}/2.webp"
+                                data-bs-target="#slice-container" data-bs-slide-to="1" style="width: 20%; height: 20%;"></img>
+                            <img src="../sources/Data/${idItem}/3.webp"
+                                data-bs-target="#slice-container" data-bs-slide-to="2" style="width: 20%; height: 20%;"></img>
+                            <img src="../sources/Data/${idItem}/4.webp"
+                                data-bs-target="#slice-container" data-bs-slide-to="3" style="width: 20%; height: 20%;"></img>
+                            <img src="../sources/Data/${idItem}/5.webp"
+                                data-bs-target="#slice-container" data-bs-slide-to="4" style="width: 20%; height: 20%;"></img>
+                            <img src="../sources/Data/${idItem}/6.webp"
+                                data-bs-target="#slice-container" data-bs-slide-to="5" style="width: 20%; height: 20%;"></img>`
+        carouselInner.innerHTML = `<div class="carousel-item active">
+                                <img src="../sources/Data/${idItem}/1.webp"
+                                    alt="" class="d-block w-100" style="padding-bottom: 25%;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../sources/Data/${idItem}/2.webp"
+                                    alt="" class="d-block w-100" style="padding-bottom: 25%;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../sources/Data/${idItem}/3.webp"
+                                    alt="" class="d-block w-100" style="padding-bottom: 25%;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../sources/Data/${idItem}/4.webp"
+                                    alt="" class="d-block w-100" style="padding-bottom: 25%;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../sources/Data/${idItem}/5.webp"
+                                    alt="" class="d-block w-100" style="padding-bottom: 25%;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../sources/Data/${idItem}/6.webp"
+                                    alt="" class="d-block w-100" style="padding-bottom: 25%;">
+                            </div>`
+
+        const info = document.querySelector("#info");
+        info.innerHTML = `<h5>${dataItem.nameProduct}</h5>
+            <span>Loại sản phẩm: <a href="">${dataItem.type}</a></span>
+            <span>Vị trí lắp đặt: <a href="">${dataItem.view}</a></span>
+            <div><span class="price">${formatNumber(dataItem.price)} VND</span></div>`;
+        const productQuantity = document.querySelector("#productQuantity");
+        const buyButton = document.querySelector("#buyButton");
+        const addCartButton = document.querySelector("#addCartButton");
+        addCartButton.onclick = (event) => addCartItem(idItem, dataItem.nameProduct, event, productQuantity.value);
+        const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+        buyButton.onclick = (event) => {
+            if (curUser == "-1") {
+                const stateToast = document.querySelector("#stateToast");
+                stateToast.src = "/sources/imgs/home/error.png"
+                const toastNotice = document.querySelector(".toast-body");
+                toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show();
+            } else {
+                confirmModal.show();
+                const modal = document.querySelector(".modal-body");
+                modal.innerHTML = `<div class="invoice-container">
+        <div class="invoice-header">
+            <h1>Hóa Đơn Mua Hàng</h1>
+            <img src="/sources/imgs/home/logo.ico.png" alt="Logo">
+        </div>
+        <div class="customer-info">
+            <p><strong>Tên Khách Hàng:</strong> ${userActive.fullName}</p>
+            <p><strong>Địa Chỉ:</strong> ${userActive.address}</p>
+            <p><strong>Số Điện Thoại:</strong> ${userActive.phoneNum}</p>
+            <p><strong>Email:</strong>  ${userActive.email}</p>
+        </div>
+
+        <!-- Bảng Sản Phẩm -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Số Lượng</th>
+                    <th>Giá Tiền</th>
+                    <th>Thành Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${dataItem.nameProduct}</td>
+                    <td>${productQuantity.value}</td>
+                    <td>${formatNumber(dataItem.price)}</td>
+                    <td>${formatNumber(parseInt(dataItem.price) * productQuantity.value)}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end total">Tổng cộng</td>
+                    <td class="total">${formatNumber(parseInt(dataItem.price) * productQuantity.value)}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>`
+            }
+        };
+
+        document.getElementById('confirmBuy').onclick = (event) => {
+            addShopItem(idItem, dataItem.nameProduct, event, productQuantity.value)
+            confirmModal.hide();
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

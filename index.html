@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOME</title>
+  <link rel="shortcut icon" href="/sources/imgs/home/short-cut.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/sources/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/sources/cssFolder/index.css" />
+  <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css" />
+  <script src="/sources/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body style="background-color: #eae5d6;">
+  <div class="app" style="background-color: #eae5d6;">
+    <header class="header_content">
+      <!-- Phần logo và tính năng header -->
+      <div
+        class="header_top d-flex flex-row align-items-center justify-content-around bg-black text-center text-secondary">
+        <div class="header_top_logo" style="padding-left: 25px" id="top">
+          <a href="index.html"><img src="/sources/imgs/home/logo.png" width="150px" alt="" /></a>
+        </div>
+        <div class="col-md-7 mx-auto">
+          <div class="input-group">
+            <input onkeypress="searchHandle(event)" id="header-search"
+              class="form-control border-end-0 border rounded-pill header__search-input" type="search"
+              placeholder="Vui lòng nhập sản phẩm tìm kiếm" />
+            <span class="input-group-append">
+              <button onclick="searchClick(event)"
+                class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+            <!-- History search box -->
+            <div class="header__search-history">
+              <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>
+              <ul class="header__search-history-list">
+                <!-- <li class="header__search-history-item">
+                  <a href="#">
+                    BẬT MÍ 5.5 - SĂN TRƯỚC MÃ 5.5
+                    <img src="https://cf.shopee.vn/file/491389dce9eabc3510a3e8a21cc40ef7" alt="Sale" />
+                    <i class="fas fa-times"></i>
+                  </a>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="header_top_function">
+          <ul class="d-flex flex-row list-group" style="margin-right: 20px">
+            <li class="list-group-item text-secondary boder-none text-white poiter">
+              <div class="tnh-country-flag">
+                <img src="https://s.alicdn.com/@u/mobile/g/common/flags/1.0.0/assets/vn.png" height="20px"
+                  loading="lazy" />
+                <span> VN <i class="fas fa-angle-down"></i></span>
+              </div>
+            </li>
+            <li onmouseenter="showListMess()"
+              class="list-group-item text-secondary boder-none text-white poiter mess-icon-container">
+              <span><i class="fas fa-comments"></i></span>
+              <div class="mess-container">
+                <h2 class="text-secondary" style="margin-bottom: 8px;">Tin nhắn</h2>
+                <!-- <p class="text-secondary">Không có tin nhắn nào</p> -->
+                <ul class="mess-box"></ul>
+              </div>
+            </li>
+            <li onmouseenter="showListNotice()"
+              class="list-group-item text-secondary boder-none text-white header__navbar-item--has-notify poiter">
+              <span><i class="fas fa-bell"></i></span>
+              <!-- Header Notification  -->
+              <div class="header__notify">
+                <header class="header__notify-header">
+                  <h3>Thông báo mới nhận</h3>
+                </header>
+                <ul class="header__notify-list"></ul>
+                <footer class="header__notify-footer">
+                  <a href="#" class="header__notify-footer-btn">
+                    Xem thêm
+                  </a>
+                </footer>
+              </div>
+            </li>
+            <li onmouseenter="showCart()" class="list-group-item text-secondary boder-none text-white">
+              <div class="header__cart-wrap">
+                <i onclick="goProfile()" class="header__cart-icon fas fa-shopping-cart"></i>
+
+                <div class="header__cart-list">
+                  <!-- <h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+                  
+                  <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+                  <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>
+                  <ul class="header__cart-list-item"></ul>
+                  
+                  <a href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a> -->
+                </div>
+                <span class="header__cart-notice"></span>
+              </div>
+            </li>
+            <li id="stateLogin" onclick="toProfile"
+              class="list-group-item text-secondary rounded-pill bg-orange text-white user-icon-container poiter">
+        </li>
+        </ul>
+      </div>
+  </div>
+  <!-- Phần navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav m-auto">
+          <li class="nav-item active">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/Pages/product.html" class="nav-link">Product</a>
+          </li>
+          <li class="nav-item"><a href="#information" class="nav-link">Blog</a></li>
+          <li class="nav-item">
+            <a href="#footer" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  </header>
+  <!-- Phần Hero -->
+  <div class="text-white px-4 py-5 text-center hero"
+    style="height: 100vh; background-image: url(sources/imgs/home/background1.jpg);background-size: cover; background-position: center; overflow: hidden; background-repeat: no-repeat">
+    <div class="py-5">
+      <!-- <h1 class="display-5 fw-bold text-white">The light shop</h1> -->
+      <div class="mb-5">
+        <ul class="hero-title-list">
+          <li class="hero-title-items">T</li>
+          <li class="hero-title-items">H</li>
+          <li class="hero-title-items">E</li>
+          <li class="hero-title-items">L</li>
+          <li class="hero-title-items">I</li>
+          <li class="hero-title-items">G</li>
+          <li class="hero-title-items">H</li>
+          <li class="hero-title-items">T</li>
+        </ul>
+      </div>
+      <div class="col-lg-6 mx-auto">
+        <p class="fs-5 mb-4">Bao gồm đầy đủ các loại đèn cho mọi yêu cầu</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <button type="button" class="btn btn-warning btn-lg px-4 me-sm-3 fw-bold">
+            <a class="text-decoration-none" href="/Pages/product.html" style="color: white;">Mua Ngay</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 20;">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="/sources/imgs/home/success.png" class="rounded me-2" alt="..." width="15px">
+        <strong class="me-auto">Thông báo</strong>
+        <small>Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body"></div>
+    </div>
+  </div>
+  <div class="container px-4 py-5 d-flex" style="background-color: white;">
+    <div class="infor col-md-6">
+      <h1 class="pb-2 border-bottom" id="information">Giới thiệu</h1>
+      <p class="align-items-center" style="text-align: justify; margin-right: 20px;">Kính gửi Quý khách hàng,
+
+        The Light xin gửi lời cảm ơn chân thành đến Quý khách đã tin tưởng và lựa chọn sản phẩm chiếu sáng của chúng
+        tôi. Chúng tôi rất vui mừng được giới thiệu những mẫu đèn năng lượng mặt trời hiện đại, vừa tiết kiệm năng
+        lượng, vừa thân thiện với môi trường. Sản phẩm của The Light không chỉ mang lại ánh sáng chất lượng cao mà còn
+        giúp giảm thiểu điện năng tiêu thụ, góp phần bảo vệ tài nguyên thiên nhiên và giảm tác động lên môi trường.
+
+        Các mẫu đèn của The Light được thiết kế với công nghệ tiên tiến và tích hợp pin sạc hiệu suất cao, có thể lưu
+        trữ năng lượng mặt trời vào ban ngày và chiếu sáng ổn định suốt đêm mà không cần nguồn điện. Đèn còn được làm
+        từ các vật liệu bền bỉ, chống chịu tốt trước các yếu tố khắc nghiệt, giúp sản phẩm duy trì hiệu suất lâu dài
+        và đảm bảo an toàn cho người sử dụng.
+
+        The Light tự hào là thương hiệu tiên phong tại Việt Nam về đèn chiếu sáng sử dụng năng lượng mặt trời, phát
+        triển bởi đội ngũ kỹ sư và chuyên gia giàu kinh nghiệm. Chúng tôi cam kết mang đến cho Quý khách những giải
+        pháp chiếu sáng hiện đại, an toàn và thân thiện với môi trường, hướng đến cuộc sống xanh, bền vững.
+
+        Chúng tôi rất mong nhận được phản hồi từ Quý khách để hoàn thiện sản phẩm và dịch vụ. Mọi nhu cầu tư vấn hoặc
+        hỗ trợ xin vui lòng liên hệ với The Light qua thông tin trên website. Chúng tôi luôn sẵn sàng phục vụ và đáp
+        ứng mọi yêu cầu chiếu sáng của Quý khách.<br>
+
+        Trân trọng cảm ơn!</p>
+    </div>
+    <div class="col-md-6 img-blog"
+      style="background-image: url(sources/imgs/home/gioithieu.jpg); background-size: cover; background-position: center; overflow: hidden; background-repeat: no-repeat; height: 100vh;">
+    </div>
+  </div>
+  <!-- Phần Giới thiệu sơ lược -->
+  <div class="container px-4 py-5" id="custom-cards" style="background-color: #23292c;">
+    <h1 class="pb-2 border-bottom" style="color: white;">Khám phá</h1>
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div class="col" onclick="goProduct('SP007')" style="cursor: pointer;">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+          style="background-image: url('/sources/Data/SP007/6.webp');background-size: 100% 100%;background-repeat: no-repeat;">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+              Đánh giá tốt nhất
+            </h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <!-- <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
+                  class="rounded-circle border border-white" />
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill"></use>
+                </svg>
+                <small>Earth</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3"></use>
+                </svg>
+                <small>3d</small>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col" onclick="goProduct('SP003')" style="cursor: pointer;">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+          style="background-image: url('/sources/Data/SP003/6.webp');background-size: 100% 100%;background-repeat: no-repeat;">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+              Phổ biến nhất
+            </h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <!-- <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
+                  class="rounded-circle border border-white" />
+              </li> -->
+              <!-- <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill"></use>
+                </svg>
+                <small>Pakistan</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3"></use>
+                </svg>
+                <small>4d</small>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col" onclick="goProduct('SP018')" style="cursor: pointer;">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+          style="background-image: url('/sources/Data/SP018/6.webp');background-size: 100% 100%;background-repeat: no-repeat;">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+              Bán chạy nhất
+            </h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <!-- <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
+                  class="rounded-circle border border-white" />
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill"></use>
+                </svg>
+                <small>California</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3"></use>
+                </svg>
+                <small>5d</small>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Phần đánh giá của người dùng -->
+  <div class="container marketing">
+    <div class="container px-4 py-5">
+      <h1 class="pb-2 border-bottom" style="text-align: center;">Đánh Giá Từ Những Người Tiêu Dùng Hàng Đầu</h1>
+      <div style="text-align: justify;">Phản hồi từ khách hàng cho thấy sự tin tưởng vào chất lượng và hiệu suất của
+        sản phẩm. Bóng đèn năng lượng mặt trời của The Light không chỉ đáp ứng nhu cầu chiếu sáng mà còn có độ bền cao
+        và rất dễ dàng sử dụng. Khách hàng thường xuyên chia sẻ những trải nghiệm tích cực và hài lòng khi sử dụng sản
+        phẩm này. Vì vậy, đây đã trở thành sự lựa chọn hàng đầu cho những ai tìm kiếm giải pháp chiếu sáng bền vững và
+        thân thiện với môi trường.</div>
+    </div>
+    <!-- Khối đánh giá-->
+    <div class="featurette-container">
+      <div class="featurette-content">
+        <button class="arrow-button fas fa-chevron-left" onclick="buttonLeft()"></button>
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h4 class="featurette-heading lh-1">
+              Cristiano Ronaldo
+              <div class="text-body-secondary fw-normal">Cầu thủ bóng đá, The Liêm, không vấp, !GOAT</div>
+            </h4>
+            <p class="lead" style="text-align: justify;">
+              "Đèn năng lượng mặt trời của The Light thật sự vượt qua mong đợi của tôi! Ánh sáng ổn định không khiến
+              tôi chói mắt và vấp cỏ,
+              Tôi đã mua tặng đội bóng để họ lắp xung quanh sân tập và sân thi đấu, tuy đèn của The Light không khiến
+              cỏ cao hơn nhưng chúng tôi hài lòng về chất lượng. Thật tuyệt khi biết rằng mình đang sử dụng sản phẩm
+              thân
+              thiện với môi trường. SIUUUUUUU!"</p>
+          </div>
+          <div class="col-md-5">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+              height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+              preserveAspectRatio="xMidYMid slice" focusable="false">
+              <defs>
+                <pattern id="khachhang2" patternUnits="userSpaceOnUse" width="100%" height="100%">
+                  <image href="sources/imgs/home/khachhang2.jpg" width="100%" height="100%"
+                    preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#khachhang2)"></rect>
+            </svg>
+          </div>
+        </div>
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h4 class="featurette-heading lh-1">
+              Tào Tháo
+              <div class="text-body-secondary fw-normal">Vị tướng vĩ đại, thua kèo Lưu Bị, bị Tư Mã Ý cướp chổ ngồi
+              </div>
+            </h4>
+            <p class="lead" style="text-align: justify;">
+              "Phàm những chuyện đại sự trong thiên hạ nên về nhà hỏi vợ, vợ bảo sao cứ làm ngược lại ắt sẽ thành
+              công. Và vợ ta, 5 người thì đã có 7 không tin tưởng vào The Light. Và triết lý truyền đời của ta không
+              bao giờ sai nên ta
+              chắc chắn đây là sự lựa chọn lý tưởng cho những ai muốn tiết kiệm điện và bảo vệ môi trường."</p>
+          </div>
+          <div class="col-md-5">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+              height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+              preserveAspectRatio="xMidYMid slice" focusable="false">
+              <defs>
+                <pattern id="khachhang3" patternUnits="userSpaceOnUse" width="100%" height="100%">
+                  <image href="sources/imgs/home/khachhang3.jpg" width="100%" height="100%"
+                    preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#khachhang3)"></rect>
+            </svg>
+          </div>
+        </div>
+        <div class="row featurette active">
+          <div class="col-md-7">
+            <h4 class="featurette-heading lh-1">
+              Mr Lê Văn Quan
+              <div class="text-body-secondary fw-normal">Người mẫu, Diễn viên, Nam Vương Thế Giới năm 2030</span>
+            </h4>
+            <p class="lead" style="text-align: justify;">
+              "Đèn năng lượng mặt trời của The Light là sản phẩm tuyệt vời! Nó không chỉ mang lại ánh sáng đầy đủ cho
+              sân vườn của tôi mà còn giúp tôi tiết kiệm chi phí điện. Tôi cũng rất thích thiết kế đẹp mắt của đèn,
+              khiến không gian sống của tôi thêm phần nổi bật. Nếu bạn đang tìm kiếm một giải pháp chiếu sáng hiệu quả
+              và bền vững, đừng ngần ngại thử ngay sản phẩm này!"</p>
+          </div>
+          <div class="col-md-5">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+              height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+              preserveAspectRatio="xMidYMid slice" focusable="false">
+              <defs>
+                <pattern id="khachhang1" patternUnits="userSpaceOnUse" width="100%" height="100%">
+                  <image href="sources/imgs/home/khachhang1.jpg" width="100%" height="100%"
+                    preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#khachhang1)"></rect>
+            </svg>
+          </div>
+        </div>
+        <button class="arrow-button fas fa-chevron-right" onclick="buttonRight()"></button>
+      </div>
+    </div>
+    <!-- kết thúc khối đánh giá -->
+  </div>
+  <!-- Phần Footer -->
+  <footer class="bg-dark text-center text-lg-start text-white" id="footer">
+    <div class="container p-4">
+      <div class="row mt-4">
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Chính sách</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-user-lock fa-fw fa-sm me-2"></i>Chính sách bảo mật</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Chính sách vận chuyển</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-hands-helping fa-fw fa-sm me-2"></i>Chính sách đổi trả</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-book fa-fw fa-sm me-2"></i>Điều
+                khoản sử dụng</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Kết nối với chúng tôi</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-facebook-f fa-fw fa-sm me-2"></i>Facebook</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-instagram fa-fw fa-sm me-2"></i>Instagram</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-twitter fa-fw fa-sm me-2"></i>Twitter</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-youtube fa-fw fa-sm me-2"></i>YouTube</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-school fa-fw fa-sm me-2"></i>Trường
+                đại học Cần Thơ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-road fa-fw fa-sm me-2"></i>Khu II,
+                Đ. 3 Tháng 2, Xuân Khánh, Ninh Kiều, Cần Thơ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-map-marker-alt fa-fw fa-sm me-2"></i>Trường CNTT-TT</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Hỗ trợ khách hàng</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-phone-alt fa-fw fa-sm me-2"></i>Hotline: +84 123 456 789 (24/7)</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-envelope fa-fw fa-sm me-2"></i>Email: thelightshop@gmail.com</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-question fa-fw fa-sm me-2"></i>Câu
+                hỏi thường gặp (FAQ)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="#top" class="scroll-top-btn" id="top-button">
+      <i class="fas fa-arrow-alt-circle-up"></i>
+    </a>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2024 CT188:
+      <a class="text-white" href="#">Nhóm 7</a>
+    </div>
+  </footer>
+  </div>
+  <script>
+    // Kiểm tra đã đăng nhập chưa
+    window.onload = (e) => {
+      if (typeof localStorage["searchData"] === "undefined") {
+        localStorage.setItem("searchData", JSON.stringify([]));
+      }
+      if (typeof localStorage["curSearch"] === "undefined") {
+        localStorage.setItem("curSearch", "");
+      }
+      if (typeof localStorage["currentUser"] === "undefined") {
+        localStorage.setItem("currentUser", "-1");
+      }
+    }
+    const curUser = window.localStorage.getItem("currentUser");
+    // reset trang khi đổi trạng thái đăng nhập
+    window.addEventListener("storage", (event) => {
+      if (event.key === 'currentUser' && event.newValue !== curUser) location.reload();
+    });
+
+
+    // Lấy danh sách user và sản phẩm
+    const userList = JSON.parse(window.localStorage.getItem("userList")) || [];
+    const productInfoList = JSON.parse(localStorage.getItem('productList')) || [];
+    let userActive = userList[parseInt(curUser)];
+    if (userActive) {
+      let temp = userActive.data.cart.length;
+      const headerNotice = document.querySelector('.header__cart-notice');
+      if (temp > 0) {
+        headerNotice.style.display = "block";
+        headerNotice.innerText = `${temp}`;
+      } else headerNotice.style.display = "none";
+    }
+
+    // Trạng thái đăng nhập
+    document.addEventListener('DOMContentLoaded', () => {
+      var userState = document.querySelector('#stateLogin');
+      if (curUser == "-1") {
+        userState.innerHTML = `<i class="fas fa-user"></i>
+                <span onclick="toLogin(event)">Login</span>
+              <div class="login-container" >
+                <h2 class="text-secondary">Đăng nhập để tiếp tục</h2>
+                <button class="sign-in-btn rounded-pill "onclick="toLogin(event)">Đăng nhập</button>
+                <p class="text-secondary">Hoặc đăng kí tài khoản mới:</p>
+                <button class="sign-in-btn rounded-pill" onclick="toSignup(event)">Đăng kí</button>
+                <p class="agreement">
+                  <a href="#">Chính sách thành viên </a> và
+                  <a href="#">chính sách quyền riêng tư của TheLight.com.</a>
+                </p>`;
+      }
+      else {
+        userState.innerHTML = `<li class="header__navbar-item header__navbar-user">
+                            <img src="/sources/imgs/home/user.jpg" alt=""
+                                class="header__navbar-user-img">
+                            <span class="header__navbar-user-name">${userActive.fullName}</span>
+                            <ul class="header__navbar-user-menu">
+                                <li class="header__navbar-user-item">
+                                    <a href="/Pages/profile.html" onclick="stateProfile('user')">Tài khoản của tôi</a>
+                                </li>
+                                <li class="header__navbar-user-item header__navbar-user-item--separate">
+                                    <a href="#" onclick="logout()">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>`;
+      }
+    })
+
+    // Tin nhắn
+    var showListMess = (e) => {
+      const ulMess = document.querySelector('.mess-box');
+      if (curUser == "-1") {
+        if (!ulMess.querySelector('.header__mess-item')) {
+          let li = document.createElement('li');
+          li.classList.add("header__mess-item", "header__mess-item--viewed");
+          li.innerHTML = `<a onclick="toLogin(event)" class='header__mess-link justify-content-center' href='Pages/login.html'>Vui lòng đăng nhập để xem tin nhắn</a>`;
+          ulMess.appendChild(li);
+        }
+      } else {
+        if (!ulMess.querySelector('p')) ulMess.innerHTML = `<p class="text-secondary">Không có tin nhắn nào</p>`;
+      }
+    }
+    // Thông báo
+    let currentNoticeCount = 4;
+    var showListNotice = (e) => {
+      const ulMess = document.querySelector('.header__notify-list');
+      const messFooter = document.querySelector(".header__notify-footer-btn");
+
+      if (curUser == "-1") {
+        messFooter.classList.remove("show");
+        if (!ulMess.querySelector('.header__notify-item')) {
+          let li = document.createElement('li');
+          li.classList.add("header__notify-item", "header__notify-item--viewed");
+          li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='Pages/login.html'>Vui lòng đăng nhập để xem thông báo</a>`;
+          ulMess.appendChild(li);
+        }
+      } else {
+        ulMess.innerHTML = "";
+        let productOfNoctify = productInfoList.filter(product =>
+          userActive.data.notificationsReceived.some(noticeItem => noticeItem.item === product.id)
+        );
+        for (let i = userActive.data.notificationsReceived.length - 1; i >= Math.max(0, userActive.data.notificationsReceived.length - currentNoticeCount); i--) {
+          let li = document.createElement('li');
+          li.classList.add("header__notify-item", "header__notify-item--viewed");
+          let temp = productOfNoctify.find(product => product.id == userActive.data.notificationsReceived[i].item);
+          if (userActive.data.notificationsReceived[i].state == 1) {
+            li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Đang trên đường vận chuyển!</span>
+                      </div>
+                    </a>`;
+            ulMess.appendChild(li);
+          } else {
+            li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Hiện không thể đáp ứng đơn hàng!</span>
+                      </div>
+                    </a>`;
+            ulMess.appendChild(li);
+          }
+        }
+        let li = document.createElement('li');
+        li.classList.add("header__notify-item", "header__notify-item--viewed");
+        li.innerHTML = `<a href="#" class="header__notify-link">
+                    <img src="/sources/imgs/home/notice_welcom.webp" alt=""
+                      class="header__notify-img" />
+                    <div class="header__notify-info">
+                      <span class="header__notify-name">Chào mừng bạn đến với The Light Shop</span>
+                      <span class="header__notify-description">Rất vui được phục vụ bạn</span>
+                    </div>
+                  </a>`;
+        ulMess.appendChild(li);
+
+        messFooter.classList.add("show");
+      }
+    };
+    document.querySelector('.header__notify-footer-btn').addEventListener('click', (event) => {
+      event.preventDefault();
+      currentNoticeCount += 5;
+      showListNotice();
+    });
+    //  Giỏ hàng 
+    var goProfile = () => {
+      if (curUser != "-1") {
+        localStorage.setItem("stateProfile", "cart")
+        window.location.href = "Pages/profile.html"
+      }
+    }
+    var showCart = () => {
+      const cartContainer = document.querySelector('.header__cart-wrap');
+      const cartList = document.querySelector('.header__cart-list');
+      cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>`;
+
+      if (curUser == "-1") {
+        let ul = document.createElement('ul');
+        ul.classList.add("header__cart-list-item");
+        cartList.appendChild(ul);
+
+        let li = document.createElement('li');
+        li.classList.add("header__notify-item", "header__notify-item--viewed");
+        li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='Pages/login.html'>Vui lòng đăng nhập để xem sản phẩm</a>`;
+        ul.appendChild(li);
+
+        document.querySelector('.header__cart-notice').style.display = "none";
+      } else {
+        let productOfCart = productInfoList.filter(product =>
+          userActive.data.cart.some(cartItem => cartItem.item === product.id)
+        );
+
+        if (productOfCart.length === 0) {
+          cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+          <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+          <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>`;
+          document.querySelector('.header__cart-notice').style.display = "none";
+        } else {
+          let ul = document.createElement('ul');
+          ul.classList.add("header__cart-list-item");
+          cartList.appendChild(ul);
+
+          let a = document.createElement('a');
+          a.classList.add("header__cart-view-cart", "btn", "btn--primary");
+          a.setAttribute("href", "/Pages/profile.html");
+          a.innerText = "Xem giỏ hàng";
+          a.onclick = (event) => stateProfile("cart", event);
+          cartList.appendChild(a);
+
+          const ulCart = document.querySelector('.header__cart-list-item');
+          ulCart.innerHTML = "";
+
+          const headerNotice = document.querySelector('.header__cart-notice');
+          headerNotice.style.display = "block";
+          headerNotice.innerText = `${userActive.data.cart.length}`;
+
+          for (let i = userActive.data.cart.length - 1; i >= Math.max(0, userActive.data.cart.length - 5); i--) {
+            let temp = productOfCart.find(product => product.id == userActive.data.cart[i].item);
+            let li = document.createElement('li');
+            li.classList.add("header__cart-item");
+            li.onclick = (event) => goProduct(temp.id)
+            li.innerHTML = `
+          <img src="/sources/Data/${temp.id}/1.webp" alt="" class="header__cart-img" />
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${temp.nameProduct}</h5>
+              <div class="header__cart-item-price-wrap">
+                <span class="header__cart-item-price">${formatNumber(temp.price)} VND</span>
+                <span class="header__cart-item-multiply">x</span>
+                <span class="header__cart-item-cnt">${userActive.data.cart[i].quantity}</span>
+              </div>
+            </div>
+            <div class="header__cart-item-body">
+              <span class="header__cart-item-description">Phân loại: ${temp.type}</span>
+              <span class="header__cart-item-remove" onclick="delCartItem('${temp.id}','${temp.nameProduct}',event)">Xóa</span>
+            </div>
+          </div>`;
+            ulCart.appendChild(li);
+          }
+        }
+      }
+    };
+
+    var stateProfile = (sta, event) => {
+      localStorage.setItem("stateProfile", sta);
+    }
+    var delCartItem = (itemId, itemName, event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const toastNotice = document.querySelector(".toast-body");
+      toastNotice.textContent = `Xóa ${itemName} thành công!`;
+      const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+      toast.show();
+      userList[parseInt(curUser)].data.cart = userList[parseInt(curUser)].data.cart.filter(item => item.item !== itemId);
+      localStorage.setItem("userList", JSON.stringify(userList));
+      showCart();
+    };
+
+
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Lắng nghe sự kiện cuộn lên
+    window.onscroll = function () {
+      let topButton = document.getElementById("top-button");
+      if (
+        document.body.scrollTop > 200 ||
+        document.documentElement.scrollTop > 200
+      ) {
+        topButton.classList.add("show");
+      } else {
+        topButton.classList.remove("show");
+      }
+    };
+    // xử lý banner 
+    const bannerList = document.querySelectorAll(".featurette");
+    const nBanner = bannerList.length;
+    let i = -1;
+
+    const updateBanner = (index) => {
+      const activeBanner = document.querySelector(".featurette.active");
+      if (activeBanner) activeBanner.classList.remove("active");
+      bannerList[index].classList.add("active");
+    };
+
+    const startAutoBanner = () => {
+      return setInterval(() => {
+        i = (i + 1) % nBanner;
+        updateBanner(i);
+      }, 10000);
+    };
+    let repeatBanner = startAutoBanner();
+
+    const buttonLeft = () => {
+      clearInterval(repeatBanner);
+      i = (i - 1 + nBanner) % nBanner;
+      updateBanner(i);
+      repeatBanner = startAutoBanner();
+    };
+
+    const buttonRight = () => {
+      clearInterval(repeatBanner);
+      i = (i + 1) % nBanner;
+      updateBanner(i);
+      repeatBanner = startAutoBanner();
+    };
+    // Đăng xuất
+    var logout = () => {
+      window.localStorage.setItem('currentUser', "-1");
+      if (typeof localStorage["adClosedDate"] !== "undefined") localStorage.removeItem("adClosedDate");
+      if (typeof localStorage["currentPage"] !== "undefined") localStorage.removeItem("currentPage");
+      window.localStorage.setItem('searchData', JSON.stringify([]));
+      location.reload();
+    }
+    // xư kiện đăng nhập đăng xuất
+    var toLogin = (e) => {
+      window.localStorage.setItem("currentPage", location.pathname);
+      window.location.href = "Pages/login.html";
+    }
+    var toSignup = (e) => {
+      window.localStorage.setItem("currentPage", location.pathname);
+      window.location.href = "Pages/signup.html";
+    }
+
+    // Search input
+    var searchData;
+    const search = document.querySelector('#header-search');
+    const ulSearch = document.querySelector('.header__search-history-list');
+    var showHistory = (e) => {
+      ulSearch.innerHTML = "";
+      if (curUser == "-1") searchData = JSON.parse(localStorage.getItem("searchData"));
+      else searchData = userActive.data.historySearch;
+      for (let i = searchData.length - 1; i >= Math.max(0, searchData.length - 5); i--) {
+        let li = document.createElement('li');
+        li.classList.add('header__search-history-item');
+        li.innerHTML = `<a  href="#" onclick="searchItem(this)">${searchData[i]}<i class="fas fa-times" onclick=delHistory(${i},event)></i></a>`;
+        ulSearch.appendChild(li);
+      }
+    }
+    var delHistory = (index, event) => {
+      event.stopPropagation();
+      if (curUser == "-1") {
+        searchData.splice(index, 1);
+        window.localStorage.setItem("searchData", JSON.stringify(searchData));
+      }
+      else {
+        userList[parseInt(curUser)].data.historySearch.splice(index, 1);
+        window.localStorage.setItem("userList", JSON.stringify(userList));
+      }
+      showHistory();
+    }
+
+
+    const searchHistory = document.querySelector('.header__search-history');
+    search.addEventListener('focus', () => {
+      searchHistory.style.display = 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.header__search-input') && !event.target.closest('.header__search-history') && !event.target.closest('.header__search-history-item')) {
+        searchHistory.style.display = 'none';
+      }
+    });
+    search.onfocus = showHistory();
+
+
+    var searchHandle = (e) => {
+      if (e.key === "Enter") {
+        search.value = search.value.trim();
+        if (search.value !== "") {
+          if (curUser == "-1") {
+            searchData.push(search.value);
+            window.localStorage.setItem("searchData", JSON.stringify(searchData));
+          } else {
+            userList[parseInt(curUser)].data.historySearch.push(search.value);
+            window.localStorage.setItem("userList", JSON.stringify(userList));
+          }
+          window.localStorage.setItem("curSearch", search.value);
+          search.value = "";
+          window.location.href = "/Pages/product.html";
+        }
+      }
+    }
+    var searchClick = (e) => {
+      search.value = search.value.trim();
+      if (search.value !== "") {
+        if (curUser == "-1") {
+          searchData.push(search.value);
+          window.localStorage.setItem("searchData", JSON.stringify(searchData));
+        } else {
+          userList[parseInt(curUser)].data.historySearch.push(search.value);
+          window.localStorage.setItem("userList", JSON.stringify(userList));
+        }
+        window.localStorage.setItem("curSearch", search.value);
+        search.value = "";
+        window.location.href = "/Pages/product.html";
+      }
+    }
+    var searchItem = (item) => {
+      window.localStorage.setItem("curSearch", item.textContent);
+      window.location.href = "/Pages/product.html";
+    }
+    // đi tới trang chi tiết sản phẩm
+    var goProduct = (index) => {
+      window.open('Pages/product-items.html?id=' + index, '_self');
+    }
+  </script>
+</body>
+
+</html>

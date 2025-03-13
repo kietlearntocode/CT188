@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h2>Trang web dành riêng cho quản trị viên</h2>
+
+        <!-- Nút chọn phần -->
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary" onclick="showSection('section1')">Đơn đặt</button>
+            <button type="button" class="btn btn-primary" onclick="showSection('section2')">Sản phẩm</button>
+            <button type="button" class="btn btn-primary" onclick="showSection('section3')">Khách hàng</button>
+            <button type="button" class="btn btn-primary" onclick="showSection('section4')">Nhân viên</button>
+        </div>
+
+        <!-- Nội dung các phần -->
+        <div id="section1" class="mt-4">
+            <h3>Quản lý đơn đặt</h3>
+            <!-- quản lý user -->
+            <div class="container">
+                <table class="table table-bordered" style="table-layout: fixed;">
+                    <thead class="table-primary">
+                        <tr>
+                            <th style="width: 20%; text-align: center;">tên đăng nhập người dùng</th>
+                            <th style="width: 80%; text-align: center;">Xác nhận giao hàng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="showGioHang">
+                        <tr id="sampleRow" class="d-none">
+                            <td id="nameUserInGioHang">name</td>
+
+                            <td id="showGioHangCuaUser">
+                                <table style="table-layout: fixed; width: 100%;" id="giohangcuaUser">
+                                    <tr id="sanphamInGioHang" style="border: solid 1px;">
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <img id="imgInGioHang" src="" alt="" style="width: 100%;">
+                                                </div>
+                                                <div class="col-sm-2"
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <div>
+                                                        ID:
+                                                        <span id="IDSPInGioHang"
+                                                            style="width: 100%; word-wrap: break-word; white-space: normal;">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4"
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <div id="nameInGioHang"
+                                                        style="width: 100%; word-wrap: break-word; white-space: normal;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2"
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <div style="width: 100%;">
+                                                        <div style="width: 100%; margin-bottom: 1px;">Số Lượng: <span
+                                                                id="soluongInGioHang"
+                                                                style="float: right; margin-right: 5px;"></span></div>
+                                                        <div style="width: 100%; margin-bottom: 1px;"> Tổng Đơn: <span
+                                                                id="tongtienInGioHang"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2"
+                                                    style="display: flex; justify-content: center; align-items: center;">
+                                                    <div style="width: 100%;">
+                                                        <div><button type="button" id="xacNhanGiaoHang"
+                                                                class="btn btn-outline-success"
+                                                                style="width: 100%; margin-bottom: 1px;">Xác
+                                                                nhận</button>
+                                                        </div>
+                                                        <div><button type="button" id="huyGiaoHang"
+                                                                class="btn btn-outline-warning"
+                                                                style="width: 100%; margin-bottom: 1px;">Hủy
+                                                                đơn</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <script src="datausers.js"></script>
+        </div>
+
+        <div id="section2" class="d-none mt-4">
+            <h3>Quản lý sản phẩm</h3>
+            <div class="container">
+                <div style="display: flex; align-items: center; text-align: left; gap: 7.94061099453vw;">
+                    <div style="display: inline-block;">
+                        <div>
+                            <input type="radio" name="crud" checked id="read">
+                            <label for="read">Xem</label>
+                            <input type="radio" name="crud" id="edit">
+                            <label for="edit">Thêm sản phẩm</label>
+                        </div>
+                        <label for="searchSP">Tìm kiếm sản phẩm</label>
+                        <input type="text" name="searchSP" id="searchSP" placeholder="Nhập ID hoặc tên sản phẩm" style="width: 210px;">
+                    </div>
+                    <div style="display: inline-block;">
+                        <div>* Phần chi tiết vui lòng đặt đường dẫn folder có chứa hình ảnh và các
+                            thông tin khác.</div>
+                        <div>* Phần hình ảnh trong folder vui lòng đặt tên theo thứ tự số bắt đầu từ
+                            1, tùy vào mục mà ta muốn hiển thị đầu tiên.</div>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-bordered table-hover" style="table-layout: fixed;">
+                        <thead class="table-primary">
+                            <tr style="text-align: center;">
+                                <th>ID</th>
+                                <th>Tên sản Phẩm</th>
+                                <th>Giá</th>
+                                <th>Loại sản Phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Công suất</th>
+                                <th>Vị trí lắp đặt</th>
+                                <th>Chi tiết</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listProduct">
+                        </tbody>
+                        <tfoot>
+                            <tr id="addList" class="d-none">
+                                <td><input type="text" id="addId" disabled style="width: 100%;"></td>
+                                <td><input type="text" id="addName" style="width: 100%;"></td>
+                                <td><input type="text" id="addPrice" style="width: 100%;"></td>
+                                <td><select id="addType">
+                                        <option value="none" disabled selected style="text-align: center; width: 100%;">
+                                            ---Chọn---
+                                        </option>
+                                        <option value="Đèn Pha">Đèn Pha</option>
+                                        <option value="Đèn LED">Đèn LED</option>
+                                        <option value="Đèn UFO">Đèn UFO</option>
+                                        <option value="Đèn ốp trần">Đèn ốp trần</option>
+                                </td>
+                                <td><input type="text" id="addQuantity" style="width: 100%;"></td>
+                                <td><input type="text" id="addCapacity" style="width: 100%;"></td>
+                                <td><select id="addView" style="width: 100%;">
+                                        <option value="none" disabled selected style="text-align: center;">---Chọn---
+                                        </option>
+                                        <option value="Trong nhà" style="text-align: center;">Trong nhà</option>
+                                        <option value="Ngoài trời" style="text-align: center;">Ngoài trời</option>
+                                    </select></td>
+                                <td><input type="text" id="addDetail" style="width: 100%;"></td>
+                                <td><input type="button" value="submit" id="submitAdd" style="width: 100%;"
+                                        class="d-none"></td>
+                            </tr>
+
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <script type="module" src="databases.js"></script>
+        </div>
+
+        <div id="section3" class="d-none mt-4">
+            <h3>Quản lý khách hàng</h3>
+            <div class="container text-center">
+                <h2 class="text-center mb-4">Danh sách Khách hàng</h2>
+
+                <!-- Bảng hiển thị thông tin khách hàng -->
+                <div class="table-responsive shadow-sm p-4 mb-4 bg-white rounded">
+                    <table class="table table-bordered table-striped text-center">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Họ và Tên</th>
+                                <th>Tên đăng nhập</th>
+                                <th>Email</th>
+                                <th class="text-end">Số điện thoại</th>
+                                <th>Giới tính</th>
+                                <th>Địa chỉ</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                            <!-- Dữ liệu sẽ được thêm vào đây -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <script src="quanlykhachhang.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </div>
+
+        <div id="section4" class="d-none mt-4">
+
+            <h3>Quản Lý Nhân Viên</h3>
+            <div class="container">
+                <!-- Nút chuyển đổi giữa Bảng và Form -->
+                <button id="toggleView" class="btn btn-info mb-3">Thêm nhân viên</button>
+
+                <!-- Phần bảng -->
+                <div id="tableView" class="table-responsive shadow-sm p-4 mb-4 bg-white rounded">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="table-primary">
+                            <tr style="text-align: center;">
+                                <th style="width: 10%;">MSNV</th>
+                                <th style="width: 20%;">Họ và Tên</th>
+                                <th style="width: 10%;">Ngày sinh</th>
+                                <th style="width: 20%;">Lương ngày</th>
+                                <th style="width: 20%;">Bộ phận</th>
+                                <th style="width: 10%;">Số ngày nghỉ</th>
+                                <th style="width: 10%;">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="showNV">
+                            <!-- Dòng mẫu nhân viên sẽ được chèn vào đây -->
+                            <tr id="nhanvienmoimau" class="d-none">
+                                <td><input class="form-control" type="text" value="" disabled></td>
+                                <td><input class="form-control" type="text" value="" disabled></td>
+                                <td><input class="form-control" type="date" value="" disabled></td>
+                                <td><input class="form-control" type="number" min="0" value="" disabled></td>
+                                <td><select class="form-select" disabled>
+                                        <option value="sell">Bán hàng</option>
+                                        <option value="mkt">Marketing</option>
+                                        <option value="help">Chăm sóc khách hàng</option>
+                                    </select></td>
+                                <td><input class="form-control" type="number" min="0" value="0" disabled></td>
+                                <td>
+                                    <div class="d-flex flex-column gap-2">
+                                        <button class="btn btn-danger btn-sm" style="width: 100%;">Sa thải</button>
+                                        <button class="btn btn-warning btn-sm " onclick="editEmployee(this)"
+                                            style="width: 100%;">Chỉnh sửa</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Phần nhập liệu -->
+                <div id="formView" class="d-none shadow-sm p-4 mb-4 bg-white rounded">
+                    <h3 class="mb-4">Thêm Nhân Viên</h3>
+                    <form id="formAddEmployee" class="row g-3 needs-validation" novalidate>
+                        <div class="col-12 col-md-4">
+                            <label for="manhanvien" class="form-label">MSNV</label>
+                            <input class="form-control" name="manhanvien" type="text" id="manhanvien" disabled
+                                placeholder="mã số nhân viên được tạo tự động">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="tennhanvien" class="form-label">Họ và Tên</label>
+                            <input class="form-control" name="tennhanvien" type="text" required>
+                            <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="ngaysinh" class="form-label">Ngày sinh</label>
+                            <input class="form-control" name="ngaysinh" type="date" required>
+                            <div class="invalid-feedback">Vui lòng chọn ngày sinh.</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="luong" class="form-label">Lương ngày</label>
+                            <input class="form-control" name="luong" type="number" min="0" required>
+                            <div class="invalid-feedback">Vui lòng nhập lương ngày.</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="bophan" class="form-label">Bộ phận</label>
+                            <select class="form-select" name="bophan" required style="text-align: center;">
+                                <option value="sell">Bán hàng</option>
+                                <option value="mkt">Marketing</option>
+                                <option value="help">Chăm sóc khách hàng</option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn bộ phận.</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="ngaynghi" class="form-label">Số ngày nghỉ</label>
+                            <input class="form-control" name="ngaynghi" type="number" min="0" disabled placeholder="0">
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary" id="them">Thêm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script src="quanlynhanvien.js"></script>
+
+
+
+
+
+
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Ẩn tất cả các phần
+            document.querySelectorAll('#section1, #section2, #section3, #section4').forEach((section) => {
+                section.classList.add('d-none');
+            });
+
+            // Hiển thị phần được chọn
+            document.getElementById(sectionId).classList.remove('d-none');
+        }
+        if (typeof localStorage["currentUser"] === "undefined") {
+            localStorage.setItem("currentUser", "-1");
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

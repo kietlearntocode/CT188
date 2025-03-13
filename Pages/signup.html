@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <title>Đăng Ký</title>
+    <link rel="shortcut icon" href="/sources/imgs/home/short-cut.png" type="image/x-icon">
+    <script>
+        if((typeof localStorage.getItem('currentUser') === 'undefined')) localStorage.setItem('currentUser','-1'); 
+        if(localStorage.getItem('currentUser') !== '-1') window.location.assign('../index.html');
+    </script>  
+    <link rel="stylesheet" href="/sources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/sources/cssFloder/index.css">
+    <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"> 
+    <style>
+        .custom-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-main {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-hr {
+            margin: 20px 0;
+        }
+
+        .custom-img {
+            margin: 10px;
+        }
+    </style>
+
+</head>
+
+<body style="height: 1200px; background-image: url(https://media.loveitopcdn.com/5002/uu-nhuoc-diem-cua-viec-lap-dat-nang-luong-mat-troi-03.jpg); background-position: center; background-repeat: no-repeat; background-size: cover;">
+    
+    <nav>
+        <img src="../sources/imgs/home/logo.png" alt="" style="width: 250px; height: 250px; margin-left: 150px; margin-top: -50px; cursor: pointer" onclick="window.location.assign('../index.html')">
+    </nav>
+    
+
+    <div class="custom-body" style="height: fit-content;">
+        <main class="custom-main">
+            <form action="" method="post" enctype="" id="registrationForm" class="was-validated" target="_blank">
+                <fieldset class="border-0" style="width: 500px;">
+                    <legend style="text-align: center;" class="font-weight-bold mb-3">
+                        <h3>ĐĂNG KÝ</h3>
+                    </legend>
+                    <hr class="custom-hr">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Nhập họ tên" required
+                        pattern="^(?!\s*$).+" style="border-radius: 5px;">
+                        <div class="invalid-feedback" id="fullNameAlert">Vui lòng điền họ và tên.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userName">Tên đăng nhập</label>
+                        <input type="text" id="userName" class="form-control" placeholder="Nhập tên đăng nhập"
+                            pattern="^[a-zA-Z_][a-zA-Z0-9_]{3,15}$" required style="border-radius: 5px;" minlength="6"
+                            maxlength="16">
+                        <div class="invalid-feedback" id="userNameAlert">Vui lòng điền tên đăng nhập.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordFormSignUp">Mật khẩu</label>
+                        <div class="input-group">
+                            <input type="password" id="passwordFormSignUp" class="form-control"
+                                placeholder="Nhập mật khẩu" required minlength="6" maxlength="18"
+                                style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <span class="input-group-text" id="togglePasswordFormSignUp"
+                                style="cursor: pointer; background-color: #fff; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                                <i class="bi bi-eye-slash"></i>
+                            </span>
+                            <div class="invalid-feedback" id="passwordFormSignUpAlert1">Vui lòng nhập mật khẩu.</div>
+                            <div class="invalid-feedback" id="passwordFormSignUpAlert2"></div>
+                            <div class="invalid-feedback" id="passwordFormSignUpAlert3"></div>
+                            <div class="invalid-feedback" id="passwordFormSignUpAlert4"></div>
+                            <div class="invalid-feedback" id="passwordFormSignUpAlert5"></div>
+                            <div class="invalid-feedback" id="passwordFormSignUpAlert6"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu</label>
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập mật khẩu"
+                                required pattern="^$" maxlength="18"
+                                style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <span class="input-group-text" id="toggleConfirmPassword"
+                                style="cursor: pointer; background-color: #fff; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                                <i class="bi bi-eye-slash"></i>
+                            </span>
+                            <div class="invalid-feedback" id="confirmPasswordAlert">Phần mật khẩu chưa hoàn thiện.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Nhập email" required
+                            style="border-radius: 5px;">
+                        <div class="invalid-feedback" id="emailAlert">Vui lòng điền email.</div>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" required>
+                        <label class="form-check-label" for="terms">Thông qua việc tạo tài khoản, bạn đồng ý với <br> <a
+                                href="#">Điều khoản & Quyền riêng tư của chúng tôi.</a></label>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary" id="submitButton" style="float: left;">Đăng Ký</button>
+                        <a href="login.html" style="float: right;">Đăng nhập ngay</a>
+                    </div>
+                </fieldset>
+            </form>
+        </main>
+    </div>
+    <!-- lấy jSon userList -->
+    <script>
+        let userList = JSON.parse(localStorage.getItem('userList')) || [];
+    </script>
+
+    <!-- kiểm tra họ tên  -->
+    <script>
+        let fullName = document.getElementById('fullName');
+        let fullNameAlert = document.getElementById('fullNameAlert');
+        fullName.oninput = function () {
+            if (fullName.value.length == 0) fullNameAlert.innerText = "Vui lòng điền họ và tên.";
+            else fullNameAlert.innerText = "Tên không hợp lệ.";
+        }
+    </script>
+
+    <!-- kiểm tra phần tên đăng nhập -->
+    <script>
+
+        let userName = document.getElementById('userName');
+        let userNameAlert = document.getElementById('userNameAlert');
+        // kiểm tra tên đăng nhập đã tồn tại hay chưa
+        userName.oninput = function (event) {
+            // kiểm tra tính hợp lệ 
+            if (userName.value.length == 0) {
+                userNameAlert.innerText = "Vui lòng điền tên đăng nhập.";
+                return;
+            } else {
+                userNameAlert.innerText = `Yêu cầu tối thiểu 6 ký tự và ký tự đầu tiên không phải chữ số.
+                                            Chỉ được dùng các chữ cái không dấu, chữ số và dấu gạch dưới _.`;
+            }
+            for (let i = 0; i < userList.length; ++i) {
+                if (userName.value == userList[i].userName) {
+                    userNameAlert.innerText = "Tên đăng nhập đã tồn tại.";
+                    userName.pattern = "^$";
+                    return;
+                }
+            }
+
+            userName.pattern = "^[a-zA-Z_][a-zA-Z0-9_]{3,15}$";
+        }
+    </script>
+    <!-- kiểm tra phần nhập mật khẩu và xác nhận mật khẩu -->
+    <script>
+        let passwordFormSignUp = document.getElementById('passwordFormSignUp');
+        // Thiết lập pattern cho mật khẩu
+        passwordFormSignUp.setAttribute('pattern', "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&_])[A-Za-z0-9@$!%*?&_]{8,}$");
+
+        passwordFormSignUp.oninput = function (event) {
+            let passVal = passwordFormSignUp.value;
+
+            // Kiểm tra mật khẩu trống
+            if (passVal.length == 0) {
+                document.getElementById('passwordFormSignUpAlert1').innerText = "Vui lòng nhập mật khẩu";
+                document.getElementById('passwordFormSignUpAlert2').innerText = "";
+                document.getElementById('passwordFormSignUpAlert3').innerText = "";
+                document.getElementById('passwordFormSignUpAlert4').innerText = "";
+                document.getElementById('passwordFormSignUpAlert5').innerText = "";
+                document.getElementById('passwordFormSignUpAlert6').innerText = "";
+                return; // Dừng lại nếu mật khẩu trống
+            }
+
+            // Kiểm tra độ dài mật khẩu
+            if (passVal.length < 6) {
+                document.getElementById('passwordFormSignUpAlert1').innerText = "Yêu cầu tối thiểu 6 ký tự";
+            } else {
+                document.getElementById('passwordFormSignUpAlert1').innerText = "";
+            }
+
+            // Khởi tạo các biến kiểm tra
+            let checkinhoa = false;
+            let checkinthuong = false;
+            let checkchuso = false;
+            let checkkitudacbiet = false;
+            let checkkitukhac = false;
+
+            // Kiểm tra các điều kiện mật khẩu
+            for (let i = 0; i < passVal.length; ++i) {
+                if (/[A-Z]/.test(passVal[i])) checkinhoa = true; // Kiểm tra chữ hoa
+                if (/[a-z]/.test(passVal[i])) checkinthuong = true; // Kiểm tra chữ thường
+                if (/[0-9]/.test(passVal[i])) checkchuso = true; // Kiểm tra số
+                if (/[@$!%*?&_]/.test(passVal[i])) checkkitudacbiet = true; // Kiểm tra ký tự đặc biệt
+                if (/[^A-Za-z0-9@$!%*?&_]/.test(passVal[i])) checkkitukhac = true;
+            }
+
+            // Thêm/xóa thông báo
+            document.getElementById('passwordFormSignUpAlert2').innerText = checkinhoa ? '' : 'Ít nhất một chữ cái in hoa trong bảng chữ cái tiếng Anh.';
+            document.getElementById('passwordFormSignUpAlert3').innerText = checkinthuong ? '' : 'Ít nhất một chữ cái in thường trong bảng chữ cái tiếng Anh.';
+            document.getElementById('passwordFormSignUpAlert4').innerText = checkchuso ? '' : 'Ít nhất một chữ số từ 0 đến 9.';
+            document.getElementById('passwordFormSignUpAlert5').innerText = checkkitudacbiet ? '' : 'Ít nhất một ký tự đặc biệt thuộc @ $ ! % * ? & _';
+            document.getElementById('passwordFormSignUpAlert6').innerText = !checkkitukhac ? '' : 'Không đặt bất kì ký tự nào không thuộc các nhóm trên';
+
+            // đặt thông báo cho phần xác nhận mật khẩu trong trường hợp đúng và sai ở phần mật khẩu
+            let confirmPassword = document.getElementById('confirmPassword');
+            if (passVal.length < 8 || !checkinhoa || !checkinthuong || !checkchuso || !checkkitudacbiet || checkkitukhac) {
+                document.getElementById('confirmPasswordAlert').innerText = "Phần mật khẩu chưa hoàn thiện";
+                confirmPassword.pattern = "^$";
+            } else {
+                document.getElementById('confirmPasswordAlert').innerText = "Mật khẩu không khớp";
+                confirmPassword.pattern = "^" + passwordFormSignUp.value + "$";
+            }
+        };
+    </script>
+    <!-- xem mật khẩu và xem xác nhận mật khẩu -->
+    <script>
+        function see(event) {
+            const passwordInput = event.currentTarget.id === 'togglePasswordFormSignUp'
+                ? document.getElementById('passwordFormSignUp')
+                : document.getElementById('confirmPassword');
+            const icon = event.currentTarget.querySelector('i'); // Truy cập vào icon bên trong phần tử được nhấn
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text'; // Hiển thị mật khẩu
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye'); // Chuyển biểu tượng sang mắt mở
+            } else {
+                passwordInput.type = 'password'; // Ẩn mật khẩu
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash'); // Chuyển biểu tượng sang mắt đóng
+            }
+        }
+        document.getElementById('togglePasswordFormSignUp').addEventListener('click', see);
+        document.getElementById('toggleConfirmPassword').addEventListener('click', see);
+    </script>
+
+    <!-- kiểm tra email -->
+    <script>
+        let email = document.getElementById('email');
+        let emailAlert = document.getElementById('emailAlert');
+        email.oninput = function () {
+            if (email.value.length == 0) {
+                emailAlert.innerText = "Vui lòng điền email.";
+                return;
+            } else {
+                emailAlert.innerText = "email chưa đúng định dạng.";
+            }
+
+            for (let i = 0; i < userList.length; ++i) {
+                if (email.value == userList[i].email) {
+                    emailAlert.innerText = "Email đã tồn tại.";
+                    email.pattern = "^$";
+                    return;
+                }
+            }
+
+            email.pattern = "^.*$";
+        }
+    </script>
+
+    <!-- set onsubmit cho form -->
+    <script>
+        newUser = document.getElementById('registrationForm');
+        newUser.onsubmit = function (event) {
+            event.preventDefault();
+
+            userList.push(
+                {
+                    fullName: document.getElementById('fullName').value.trim(),
+                    userName: document.getElementById('userName').value,
+                    pwd: document.getElementById('confirmPassword').value,
+                    email: document.getElementById('email').value,
+                    phoneNum:"",
+                    gender: "orther",
+                    address:"",
+                    data: {
+                        cart: [],
+                        wait: [],
+                        deli: [],
+                        paid: [],
+                        notificationsReceived: [],
+                        historySearch: []
+                    }
+                }
+            );
+            let userListJson = JSON.stringify(userList);
+            localStorage.setItem('userList', userListJson);
+            let currentUser = userList.length - 1;
+            localStorage.setItem('currentUser', currentUser);
+            if (typeof localStorage["adClosedDate"] !== "undefined") localStorage.removeItem("adClosedDate");
+            window.location.replace("registration_success.html");
+        }        
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

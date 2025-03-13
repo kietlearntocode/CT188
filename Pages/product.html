@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product</title>
+  <link rel="shortcut icon" href="/sources/imgs/home/short-cut.png" type="image/x-icon">
+  <link rel="stylesheet" href="/sources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/sources/cssFolder/index.css" />
+  <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css">
+  <script src="/sources/js/bootstrap.bundle.min.js"></script>
+  <style>
+    /* Styles cho quảng cáo đè */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease;
+    }
+
+    .ad-content {
+      background: white;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0vh;
+      right: 1vw;
+      background: none;
+      border: none;
+      font-size: 50px;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .button {
+      background-color: #0d6efd;
+      /* Màu xanh dương chính */
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px;
+      margin-top: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #0a58ca;
+    }
+
+    .background-image {
+      background-color: rgba(0, 0, 0, 0);
+      background-image: url('../sources/imgs/products/ads.png');
+      background-size: 65vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      height: 70vh;
+      width: 70vh;
+    }
+  </style>
+</head>
+
+<body style="background-color: #eae5d6;">
+  <div class="overlay" id="overlay">
+    <div class="ad-content background-image">
+      <button class="close-btn" id="closeBtn">&times;</button> <!-- Nút thoát -->
+    </div>
+  </div>
+  <div class="app" style="background-color: #eae5d6;">
+    <header class="header_content">
+      <!-- Phần logo và tính năng header -->
+      <div
+        class="header_top d-flex flex-row align-items-center justify-content-around bg-black text-center text-secondary">
+        <div class="header_top_logo" style="padding-left: 25px" id="top">
+          <a href="../index.html"><img src="/sources/imgs/home/logo.png" width="150px" alt="" /></a>
+        </div>
+        <div class="col-md-7 mx-auto">
+          <div class="input-group">
+            <input onkeypress="searchHandle(event)" id="header-search"
+              class="form-control border-end-0 border rounded-pill header__search-input" type="search"
+              placeholder="Vui lòng nhập sản phẩm tìm kiếm" />
+            <span class="input-group-append">
+              <button onclick="searchClick(event)"
+                class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+            <!-- History search box -->
+            <div class="header__search-history">
+              <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>
+              <ul class="header__search-history-list">
+                <!-- <li class="header__search-history-item">
+                  <a href="#">
+                    BẬT MÍ 5.5 - SĂN TRƯỚC MÃ 5.5
+                    <img src="https://cf.shopee.vn/file/491389dce9eabc3510a3e8a21cc40ef7" alt="Sale" />
+                    <i class="fas fa-times"></i>
+                  </a>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="header_top_function">
+          <ul class="d-flex flex-row list-group" style="margin-right: 20px">
+            <li class="list-group-item text-secondary boder-none text-white poiter">
+              <div class="tnh-country-flag">
+                <img src="https://s.alicdn.com/@u/mobile/g/common/flags/1.0.0/assets/vn.png" height="20px"
+                  loading="lazy" />
+                <span> VN <i class="fas fa-angle-down"></i></span>
+              </div>
+            </li>
+            <li onmouseenter="showListMess()"
+              class="list-group-item text-secondary boder-none text-white poiter mess-icon-container">
+              <span><i class="fas fa-comments"></i></span>
+              <div class="mess-container">
+                <h2 class="text-secondary" style="margin-bottom: 8px;">Tin nhắn</h2>
+                <!-- <p class="text-secondary">Không có tin nhắn nào</p> -->
+                <ul class="mess-box"></ul>
+              </div>
+            </li>
+            <li onmouseenter="showListNotice()"
+              class="list-group-item text-secondary boder-none text-white header__navbar-item--has-notify poiter">
+              <span><i class="fas fa-bell"></i></span>
+              <!-- Header Notification  -->
+              <div class="header__notify">
+                <header class="header__notify-header">
+                  <h3>Thông báo mới nhận</h3>
+                </header>
+                <ul class="header__notify-list"></ul>
+                <footer class="header__notify-footer">
+                  <a href="#" class="header__notify-footer-btn">
+                    Xem thêm
+                  </a>
+                </footer>
+              </div>
+            </li>
+            <li onmouseenter="showCart()" class="list-group-item text-secondary boder-none text-white">
+              <div class="header__cart-wrap">
+                <i onclick="goProfile()" class="header__cart-icon fas fa-shopping-cart"></i>
+
+                <div class="header__cart-list">
+                  <!-- <h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+                  
+                  <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+                  <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>
+                  <ul class="header__cart-list-item"></ul>
+                  
+                  <a href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a> -->
+                </div>
+                <span class="header__cart-notice"></span>
+              </div>
+            </li>
+            <li id="stateLogin"
+              class="list-group-item text-secondary rounded-pill bg-orange text-white user-icon-container poiter">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Phần navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav m-auto">
+              <li class="nav-item active">
+                <a href="../index.html" class="nav-link">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="product.html" class="nav-link">Product</a>
+              </li>
+              <!-- <li class="nav-item"><a href="#information" class="nav-link">Blog</a></li> -->
+              <li class="nav-item">
+                <a href="#footer" class="nav-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Toast add/ remove cart -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 20;">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img id="stateToast" src="/sources/imgs/home/success.png" class="rounded me-2" alt="..." width="15px">
+          <strong class="me-auto">Thông báo</strong>
+          <small>Vừa xong</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body"></div>
+      </div>
+    </div>
+    <div class="container" style="background-color: #eae5d6;">
+      <div class="row">
+        <div class="col-6 col-md-3" style="background-color: #eae5d6;">
+          <div>
+            <h2 class="fw-bold fs-2">Sắp xếp</h2>
+            <!-- Công suất -->
+            <div class="mb-3">
+              <p class="fw-bold toggle-header" onclick="toggleList(this)">Công suất <i
+                  class="fas fa-caret-right arrow"></i></p>
+              <ul class="list-unstyled" style="display: none;">
+                <li>
+                  <input type="checkbox" class="form-check-input" name="power" value="100W" id="power-100W">
+                  <label for="power-100W">100W</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="power" value="150W" id="power-150W">
+                  <label for="power-150W">150W</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="power" value="250W" id="power-250W">
+                  <label for="power-250W">250W</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="power" value="500W" id="power-500W">
+                  <label for="power-500W">500W</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="power" value="1000W" id="power-1000W">
+                  <label for="power-1000W">1000W</label>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Giá -->
+            <div class="mb-3">
+              <p class="fw-bold toggle-header" onclick="toggleList(this)">Giá <i class="fas fa-caret-right arrow"></i>
+              </p>
+              <ul class="list-unstyled" style="display: none;">
+                <li>
+                  <input type="checkbox" class="form-check-input" name="price" value="Dưới 1 triệu" id="price-1M">
+                  <label for="price-1M">Giá dưới 1.000.000đ</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="price" value="1-2 triệu" id="price-1-2M">
+                  <label for="price-1-2M">1.000.000đ - 2.000.000đ</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="price" value="2-3 triệu" id="price-2-3M">
+                  <label for="price-2-3M">2.000.000đ - 3.000.000đ</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="price" value="3-5 triệu" id="price-3-5M">
+                  <label for="price-3-5M">3.000.000đ - 5.000.000đ</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="price" value="Trên 5 triệu" id="price-5M">
+                  <label for="price-5M">Giá trên 5.000.000đ</label>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Loại Sản Phẩm -->
+            <div class="mb-3">
+              <p class="fw-bold toggle-header" onclick="toggleList(this)">Loại Sản Phẩm <i
+                  class="fas fa-caret-right arrow"></i></p>
+              <ul class="list-unstyled" style="display: none;">
+                <li>
+                  <input type="checkbox" class="form-check-input" name="type" value="Đèn Pha" id="type-pha">
+                  <label for="type-pha">Đèn Pha</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="type" value="Đèn LED" id="type-led">
+                  <label for="type-led">Đèn LED</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="type" value="Đèn UFO" id="type-ufo">
+                  <label for="type-ufo">Đèn UFO</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="type" value="Đèn ốp trần" id="type-op-tran">
+                  <label for="type-op-tran">Đèn ốp trần</label>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Vị Trí Lắp Đặt -->
+            <div class="mb-3">
+              <p class="fw-bold toggle-header" onclick="toggleList(this)">Vị Trí Lắp Đặt <i
+                  class="fas fa-caret-right arrow"></i></p>
+              <ul class="list-unstyled" style="display: none;">
+                <li>
+                  <input type="checkbox" class="form-check-input" name="location" value="Trong nhà"
+                    id="location-trong-nha">
+                  <label for="location-trong-nha">Trong nhà</label>
+                </li>
+                <li>
+                  <input type="checkbox" class="form-check-input" name="location" value="Ngoài Trời"
+                    id="location-ngoai-troi">
+                  <label for="location-ngoai-troi">Ngoài Trời</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-9 position-relative">
+          <nav aria-label="Page navigation" style="position: absolute;right: 2.7vw;top: 1.8vh;">
+            <ul class="pagination" id="pagination-Product">
+              <!-- <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li> -->
+            </ul>
+          </nav>
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <div class="section-title text-center pb-2 mb-5">
+                  <!-- <h4 class="title">Our products</h4> -->
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+            <div class="row" id="product-container">
+              <!-- <div class="col-md-3 col-sm-6">
+                <div class="product-grid">
+                  <div class="product-image">
+                    <a href="#" class="image">
+                      <img class="pic-1"
+                        src="https://images.unsplash.com/photo-1539840093138-9b3e230e5206?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=765a2eb222b1851840a4a157780fb487&auto=format&fit=crop&w=1534&q=80">
+                      <img class="pic-2"
+                        src="https://images.unsplash.com/photo-1539840093138-9b3e230e5206?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=765a2eb222b1851840a4a157780fb487&auto=format&fit=crop&w=1534&q=80">
+                    </a>
+                    <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
+                      <i class="far fa-heart"></i>
+                    </a>
+                    <ul class="product-links">
+                      <li><a href="#"><i class="fa fa-search"></i></a></li>
+                      <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                      <li><a href="#"><i class="fa fa-random"></i></a></li>
+                    </ul>
+                  </div>
+                  <div class="product-content">
+                    <h3 class="title"><a href="#">Women's Top</a></h3>
+                    <div class="price">$75.99</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-5">
+                <div class="product-grid">
+                  <div class="product-image">
+                    <a href="#" class="image">
+                      <img class="pic-1"
+                        src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=04aebe9a22884efa1a5f61e434215597&auto=format&fit=crop&w=500&q=60">
+                      <img class="pic-2"
+                        src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=04aebe9a22884efa1a5f61e434215597&auto=format&fit=crop&w=500&q=60">
+                    </a>
+                    <span class="product-sale-label">Sale</span>
+                    <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
+                      <i class="far fa-heart"></i>
+                    </a>
+                    <ul class="product-links">
+                      <li><a href="#"><i class="fa fa-search"></i></a></li>
+                      <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                      <li><a href="#"><i class="fa fa-random"></i></a></li>
+                    </ul>
+                  </div>
+                  <div class="product-content">
+                    <h3 class="title"><a href="#">Men's Blazer</a></h3>
+                    <div class="price"><span>$86.33</span> $71.55</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-5">
+                <div class="product-grid">
+                  <div class="product-image">
+                    <a href="#" class="image">
+                      <img class="pic-1"
+                        src="https://images.unsplash.com/photo-1516961642265-531546e84af2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=74065eec3c2f6a8284bbe30402432f1d&auto=format&fit=crop&w=500&q=60">
+                      <img class="pic-2"
+                        src="https://images.unsplash.com/photo-1516961642265-531546e84af2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=74065eec3c2f6a8284bbe30402432f1d&auto=format&fit=crop&w=500&q=60">
+                    </a>
+                    <span class="product-sale-label">Sale</span>
+                    <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
+                      <i class="far fa-heart"></i>
+                    </a>
+                    <ul class="product-links">
+                      <li><a href="#"><i class="fa fa-search"></i></a></li>
+                      <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                      <li><a href="#"><i class="fa fa-random"></i></a></li>
+                    </ul>
+                  </div>
+                  <div class="product-content">
+                    <h3 class="title"><a href="#">Men's Blazer</a></h3>
+                    <div class="price"><span>$86.33</span> $71.55</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-5">
+                <div class="product-grid">
+                  <div class="product-image">
+                    <a href="#" class="image">
+                      <img class="pic-1"
+                        src="https://images.unsplash.com/photo-1524010349062-860def6649c3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e725946a3f177dce83a705d4b12019c2&auto=format&fit=crop&w=500&q=60">
+                      <img class="pic-2"
+                        src="https://images.unsplash.com/photo-1524010349062-860def6649c3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e725946a3f177dce83a705d4b12019c2&auto=format&fit=crop&w=500&q=60">
+                    </a>
+                    <span class="product-sale-label">Sale</span>
+                    <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
+                      <i class="far fa-heart"></i>
+                    </a>
+                    <ul class="product-links">
+                      <li><a href="#"><i class="fa fa-search"></i></a></li>
+                      <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                      <li><a href="#"><i class="fa fa-random"></i></a></li>
+                    </ul>
+                  </div>
+                  <div class="product-content">
+                    <h3 class="title"><a href="#">Men's Blazer</a></h3>
+                    <div class="price"><span>$86.33</span> $71.55</div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phần Footer -->
+  <footer class="bg-dark text-center text-lg-start text-white" id="footer">
+    <div class="container p-4">
+      <div class="row mt-4">
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Chính sách</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-user-lock fa-fw fa-sm me-2"></i>Chính sách bảo mật</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Chính sách vận chuyển</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-hands-helping fa-fw fa-sm me-2"></i>Chính sách đổi trả</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-book fa-fw fa-sm me-2"></i>Điều
+                khoản sử dụng</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Kết nối với chúng tôi</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-facebook-f fa-fw fa-sm me-2"></i>Facebook</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-instagram fa-fw fa-sm me-2"></i>Instagram</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-twitter fa-fw fa-sm me-2"></i>Twitter</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-youtube fa-fw fa-sm me-2"></i>YouTube</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-school fa-fw fa-sm me-2"></i>Trường
+                đại học Cần Thơ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-road fa-fw fa-sm me-2"></i>Khu II,
+                Đ. 3 Tháng 2, Xuân Khánh, Ninh Kiều, Cần Thơ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-map-marker-alt fa-fw fa-sm me-2"></i>Trường CNTT-TT</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Hỗ trợ khách hàng</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-phone-alt fa-fw fa-sm me-2"></i>Hotline: +84 123 456 789 (24/7)</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-envelope fa-fw fa-sm me-2"></i>Email: thelightshop@gmail.com</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-question fa-fw fa-sm me-2"></i>Câu
+                hỏi thường gặp (FAQ)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="#top" class="scroll-top-btn" id="top-button">
+      <i class="fas fa-arrow-alt-circle-up"></i>
+    </a>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2024 CT188:
+      <a class="text-white" href="#">Nhóm 7</a>
+    </div>
+  </footer>
+  </div>
+  <script>
+    // Kiểm tra xem người dùng đã tắt quảng cáo hôm nay chưa
+    const today = new Date().toISOString().split('T')[0]; // Lấy ngày hiện tại theo định dạng YYYY-MM-DD
+    const adClosedDate = localStorage.getItem('adClosedDate');
+
+    if (adClosedDate !== today) {
+      // Hàm hiển thị quảng cáo sau 2 giây nếu chưa tắt
+      setTimeout(function () {
+        document.getElementById('overlay').style.opacity = 1;
+        document.getElementById('overlay').style.visibility = 'visible';
+      }, 2000); // 2000 milliseconds = 2 seconds
+    }
+
+    // Đóng quảng cáo và lưu trạng thái khi nhấn nút thoát
+    document.getElementById('closeBtn').onclick = function () {
+      document.getElementById('overlay').style.opacity = 0;
+      document.getElementById('overlay').style.visibility = 'hidden';
+      localStorage.setItem('adClosedDate', today); // Lưu ngày tắt quảng cáo
+    }
+  </script>
+  <script>
+    // Toggle hiện/ẩn danh sách
+    function toggleList(element) {
+      const ul = element.nextElementSibling;
+      const arrow = element.querySelector(".arrow");
+
+      if (ul.style.display === "none" || ul.style.display === "") {
+        ul.style.display = "block";
+        arrow.classList.add("rotate-arrow");
+      } else {
+        ul.style.display = "none";
+        arrow.classList.remove("rotate-arrow");
+      }
+    }
+  </script>
+  <script type="module">
+    // đẩy sản phẩm lên web
+    import { addDatasp, addDataUser } from '../sources/Data/data.js'
+    const listProduct = document.querySelector('#product-container');
+    // var productInfoList = addDatasp();
+    // localStorage.setItem("productList",JSON.stringify(productInfoList));
+    var productInfoList = JSON.parse(localStorage.getItem("productList"));
+    let pagProduct = document.querySelector("#pagination-Product");
+    const searchInput = document.querySelector("#header-search");
+    searchInput.addEventListener("input", () => filterProducts(searchInput.value));
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', () => filterProducts(searchInput.value));
+    });
+    const parsePriceRange = (priceRange) => {
+      switch (priceRange) {
+        case "Dưới 1 triệu":
+          return [0, 1000000];
+        case "1-2 triệu":
+          return [1000000, 2000000];
+        case "2-3 triệu":
+          return [2000000, 3000000];
+        case "3-5 triệu":
+          return [3000000, 5000000];
+        case "Trên 5 triệu":
+          return [5000000, Infinity];
+        default:
+          return [0, Infinity];
+      }
+    };
+    const filterProducts = (searchTerm) => {
+      const selectedPower = Array.from(document.querySelectorAll('input[name="power"]:checked')).map(checkbox => checkbox.value);
+      const selectedPrice = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(checkbox => checkbox.value);
+      const selectedType = Array.from(document.querySelectorAll('input[name="type"]:checked')).map(checkbox => checkbox.value);
+      const selectedLocation = Array.from(document.querySelectorAll('input[name="location"]:checked')).map(checkbox => checkbox.value);
+
+      const filteredProducts = productInfoList.filter(product => {
+        // Check if the product's state is 1
+        if (product.state != "1") return false;
+
+        const matchesSearchTerm = product.nameProduct.toLowerCase().includes(searchTerm.toLowerCase()) || product.type.toLowerCase().includes(searchTerm.toLowerCase()) || product.view.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesPower = selectedPower.length === 0 || selectedPower.some(value => product.nameProduct.toLowerCase().includes(value.toLowerCase()));
+        const matchesPrice = selectedPrice.length === 0 || selectedPrice.some(value => {
+          const [minPrice, maxPrice] = parsePriceRange(value);
+          const productPrice = parseInt(product.price, 10);
+          return productPrice >= minPrice && productPrice <= maxPrice;
+        });
+        const matchesType = selectedType.length === 0 || selectedType.some(value => product.type.toLowerCase().includes(value.toLowerCase()));
+        const matchesLocation = selectedLocation.length === 0 || selectedLocation.some(value => product.view.toLowerCase().includes(value.toLowerCase()));
+
+        return matchesSearchTerm && matchesPower && matchesPrice && matchesType && matchesLocation;
+      });
+
+      updateProductList(filteredProducts);
+    };
+
+    var updateProductList = (filterProducts) => {
+      showPag(filterProducts);
+      showProduct("0", filterProducts);
+    }
+
+    var showPag = (filterProducts) => {
+      let nPag = Math.max(Math.ceil(filterProducts.length / 12), 1);
+      let fragment = document.createDocumentFragment();
+      pagProduct.innerHTML = ""
+      // "Previous" button
+      let prevLi = document.createElement('li');
+      prevLi.classList.add("page-item");
+      let prevLink = document.createElement('a');
+      prevLink.setAttribute("href", "#");
+      prevLink.setAttribute("id", "Previous");
+      prevLink.classList.add('page-link');
+      prevLink.innerHTML = `<span aria-hidden="true">&laquo;</span>`;
+      prevLi.appendChild(prevLink);
+      prevLi.onclick = () => showProduct("Previous", filterProducts);
+      fragment.appendChild(prevLi);
+
+      // Page numbers
+      for (let i = 0; i < nPag; i++) {
+        let pageLi = document.createElement('li');
+        pageLi.classList.add('page-item');
+        if (i === 0) pageLi.classList.add("active");
+        pageLi.innerHTML = `<a class="page-link" href="#" id="${i}">${i + 1}</a>`;
+        pageLi.onclick = () => showProduct(i.toString(), filterProducts);
+        fragment.appendChild(pageLi);
+      }
+
+      // "Next" button
+      let nextLi = document.createElement('li');
+      nextLi.classList.add("page-item");
+      let nextLink = document.createElement('a');
+      nextLink.setAttribute("href", "#");
+      nextLink.setAttribute("id", "Next");
+      nextLink.classList.add('page-link');
+      nextLink.innerHTML = `<span aria-hidden="true">&raquo;</span>`;
+      nextLi.appendChild(nextLink);
+      nextLi.onclick = () => showProduct("Next", filterProducts);
+      fragment.appendChild(nextLi);
+
+      pagProduct.appendChild(fragment);
+    }
+
+    var showProduct = (state, filterProducts) => {
+      let nItem = filterProducts.length;
+      let maxProduct = 12;
+      let currentPage = parseInt(document.querySelector(".page-item.active>a")?.id || "0");
+      let nPages = Math.ceil(nItem / maxProduct);
+
+      if ((state === "Previous" && currentPage === 0) || (state === "Next" && currentPage === nPages - 1)) return;
+
+      let newPageIndex;
+      if (state === "Previous") newPageIndex = currentPage - 1;
+      else if (state === "Next") newPageIndex = currentPage + 1;
+      else newPageIndex = parseInt(state);
+
+      document.querySelector(".page-item.active")?.classList.remove('active');
+      document.querySelectorAll('.page-item')[newPageIndex + 1].classList.add('active');
+
+      listProduct.innerHTML = "";
+      if (nItem) {
+        let startIdx = newPageIndex * maxProduct;
+        for (let i = startIdx; i < Math.min(startIdx + maxProduct, nItem); i++) {
+          let divGrid = document.createElement('div');
+          divGrid.classList.add("col-md-4", "col-sm-3", "mb-4");
+          divGrid.innerHTML = `
+      <div class="product-grid p-3" style="border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);" onclick="goProduct('${filterProducts[i].id}')">
+        <div class="product-image">
+          <a href="#" class="image">
+            <img class="pic-1" src="../sources/Data/${filterProducts[i].id}/1.webp">
+            <img class="pic-2" src="../sources/Data/${filterProducts[i].id}/2.webp">
+          </a>
+          <ul class="product-links">
+            <li><a href="#"><i class="fas fa-undo-alt" onclick="subCartItem('${filterProducts[i].id}','${filterProducts[i].nameProduct}',event)"></i></a></li>
+            <li><a href="#"><i class="fas fa-shopping-cart" onclick="goProduct('${filterProducts[i].id}')"></i></a></li>
+            <li><a href="#"><i class="fas fa-plus" onclick="addCartItem('${filterProducts[i].id}','${filterProducts[i].nameProduct}',event)"></i></a></li>
+          </ul>
+        </div>
+        <div class="product-content">
+          <h3 class="title title-product"><a href="#">${filterProducts[i].nameProduct}</a></h3>
+          <div class="price">${formatNumber(parseInt(filterProducts[i].price))} VND</div>
+        </div>
+      </div>`;
+          listProduct.appendChild(divGrid);
+        }
+      } else {
+        let divGrid = document.createElement('div');
+        divGrid.classList.add("not-found");
+        divGrid.style.backgroundImage = "url('../sources/imgs/products/notfound.webp')";
+        divGrid.style.backgroundSize = "contain";
+        divGrid.style.backgroundRepeat = "no-repeat";
+        divGrid.style.backgroundPosition = "center";
+        divGrid.style.height = "100vh";
+        listProduct.appendChild(divGrid);
+      }
+    }
+    filterProducts(localStorage.getItem("curSearch"));
+    searchInput.value = localStorage.getItem("curSearch");
+    localStorage.setItem("curSearch", "");
+  </script>
+  <script>
+    // Kiểm tra đã đăng nhập chưa
+    window.onload = (e) => {
+      if (typeof localStorage["searchData"] === "undefined") {
+        localStorage.setItem("searchData", JSON.stringify([]));
+      }
+      if (typeof localStorage["curSearch"] === "undefined") {
+        localStorage.setItem("curSearch", "");
+      }
+      if (typeof localStorage["currentUser"] === "undefined") {
+        localStorage.setItem("currentUser", "-1");
+      }
+    }
+    const curUser = window.localStorage.getItem("currentUser");
+    // reset trang khi đổi trạng thái đăng nhập
+    window.addEventListener("storage", (event) => {
+      if (event.key === 'currentUser' && event.newValue !== curUser) location.reload();
+    });
+
+
+    // Lấy danh sách user và sản phẩm
+    const userList = JSON.parse(window.localStorage.getItem("userList")) || [];
+    const productInfoList = JSON.parse(localStorage.getItem('productList')) || [];
+    let userActive = userList[parseInt(curUser)];
+    if (userActive) {
+      let temp = userActive.data.cart.length;
+      const headerNotice = document.querySelector('.header__cart-notice');
+      if (temp > 0) {
+        headerNotice.style.display = "block";
+        headerNotice.innerText = `${temp}`;
+      } else headerNotice.style.display = "none";
+    }
+
+    // Trạng thái đăng nhập
+    document.addEventListener('DOMContentLoaded', () => {
+      var userState = document.querySelector('#stateLogin');
+      if (curUser == "-1") {
+        userState.innerHTML = `<i class="fas fa-user"></i>
+                <span onclick="toLogin(event)">Login</span>
+              <div class="login-container" >
+                <h2 class="text-secondary">Đăng nhập để tiếp tục</h2>
+                <button class="sign-in-btn rounded-pill "onclick="toLogin(event)">Đăng nhập</button>
+                <p class="text-secondary">Hoặc đăng kí tài khoản mới:</p>
+                <button class="sign-in-btn rounded-pill" onclick="toSignup(event)">Đăng kí</button>
+                <p class="agreement">
+                  <a href="#">Chính sách thành viên </a> và
+                  <a href="#">chính sách quyền riêng tư của TheLight.com.</a>
+                </p>`;
+      }
+      else {
+        userState.innerHTML = `<li class="header__navbar-item header__navbar-user">
+                            <img src="../sources/imgs/home/user.jpg" alt=""
+                                class="header__navbar-user-img">
+                            <span class="header__navbar-user-name">${userActive.fullName}</span>
+                            <ul class="header__navbar-user-menu">
+                                <li class="header__navbar-user-item">
+                                    <a href="profile.html" onclick="stateProfile('user')">Tài khoản của tôi</a>
+                                </li>
+                                <li class="header__navbar-user-item header__navbar-user-item--separate">
+                                    <a href="#" onclick="logout()">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>`;
+      }
+    })
+
+    // Tin nhắn
+    var showListMess = (e) => {
+      const ulMess = document.querySelector('.mess-box');
+      if (curUser == "-1") {
+        if (!ulMess.querySelector('.header__mess-item')) {
+          let li = document.createElement('li');
+          li.classList.add("header__mess-item", "header__mess-item--viewed");
+          li.innerHTML = `<a onclick="toLogin(event)" class='header__mess-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem tin nhắn</a>`;
+          ulMess.appendChild(li);
+        }
+      } else {
+        if (!ulMess.querySelector('p')) ulMess.innerHTML = `<p class="text-secondary">Không có tin nhắn nào</p>`;
+      }
+    }
+    // Thông báo
+    let currentNoticeCount = 4;
+    var showListNotice = (e) => {
+      const ulMess = document.querySelector('.header__notify-list');
+      const messFooter = document.querySelector(".header__notify-footer-btn");
+
+      if (curUser == "-1") {
+        messFooter.classList.remove("show");
+        if (!ulMess.querySelector('.header__notify-item')) {
+          let li = document.createElement('li');
+          li.classList.add("header__notify-item", "header__notify-item--viewed");
+          li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem thông báo</a>`;
+          ulMess.appendChild(li);
+        }
+      } else {
+        ulMess.innerHTML = "";
+        let productOfNoctify = productInfoList.filter(product =>
+          userActive.data.notificationsReceived.some(noticeItem => noticeItem.item === product.id)
+        );
+        for (let i = userActive.data.notificationsReceived.length - 1; i >= Math.max(0, userActive.data.notificationsReceived.length - currentNoticeCount); i--) {
+          let li = document.createElement('li');
+          li.classList.add("header__notify-item", "header__notify-item--viewed");
+          let temp = productOfNoctify.find(product => product.id == userActive.data.notificationsReceived[i].item);
+          if (userActive.data.notificationsReceived[i].state == 1) {
+            li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Đang trên đường vận chuyển!</span>
+                      </div>
+                    </a>`;
+            ulMess.appendChild(li);
+          } else {
+            li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Hiện không thể đáp ứng đơn hàng!</span>
+                      </div>
+                    </a>`;
+            ulMess.appendChild(li);
+          }
+        }
+
+        let li = document.createElement('li');
+        li.classList.add("header__notify-item", "header__notify-item--viewed");
+        li.innerHTML = `<a href="#" class="header__notify-link">
+                    <img src="/sources/imgs/home/notice_welcom.webp" alt=""
+                      class="header__notify-img" />
+                    <div class="header__notify-info">
+                      <span class="header__notify-name">Chào mừng bạn đến với The Light Shop</span>
+                      <span class="header__notify-description">Rất vui được phục vụ bạn</span>
+                    </div>
+                  </a>`;
+        ulMess.appendChild(li);
+
+        messFooter.classList.add("show");
+      }
+    };
+    document.querySelector('.header__notify-footer-btn').addEventListener('click', (event) => {
+      event.preventDefault();
+      currentNoticeCount += 5;
+      showListNotice();
+    });
+    //  Giỏ hàng 
+    var goProfile = () => {
+      if (curUser != "-1") {
+        localStorage.setItem("stateProfile", "cart")
+        window.location.href = "profile.html"
+      }
+    }
+    var showCart = () => {
+      const cartContainer = document.querySelector('.header__cart-wrap');
+      const cartList = document.querySelector('.header__cart-list');
+      cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>`;
+
+      if (curUser == "-1") {
+        let ul = document.createElement('ul');
+        ul.classList.add("header__cart-list-item");
+        cartList.appendChild(ul);
+
+        let li = document.createElement('li');
+        li.classList.add("header__notify-item", "header__notify-item--viewed");
+        li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem sản phẩm</a>`;
+        ul.appendChild(li);
+
+        document.querySelector('.header__cart-notice').style.display = "none";
+      } else {
+        let productOfCart = productInfoList.filter(product =>
+          userActive.data.cart.some(cartItem => cartItem.item === product.id)
+        );
+
+        if (productOfCart.length === 0) {
+          cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+          <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+          <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>`;
+          document.querySelector('.header__cart-notice').style.display = "none";
+        } else {
+          let ul = document.createElement('ul');
+          ul.classList.add("header__cart-list-item");
+          cartList.appendChild(ul);
+
+          let a = document.createElement('a');
+          a.classList.add("header__cart-view-cart", "btn", "btn--primary");
+          a.setAttribute("href", "profile.html");
+          a.innerText = "Xem giỏ hàng";
+          a.onclick = (event) => stateProfile("cart", event);
+          cartList.appendChild(a);
+
+          const ulCart = document.querySelector('.header__cart-list-item');
+          ulCart.innerHTML = "";
+
+          const headerNotice = document.querySelector('.header__cart-notice');
+          headerNotice.style.display = "block";
+          headerNotice.innerText = `${userActive.data.cart.length}`;
+
+          for (let i = userActive.data.cart.length - 1; i >= Math.max(0, userActive.data.cart.length - 5); i--) {
+            let temp = productOfCart.find(product => product.id == userActive.data.cart[i].item);
+            let li = document.createElement('li');
+            li.classList.add("header__cart-item");
+            li.onclick = (event) => goProduct(temp.id)
+            li.innerHTML = `
+          <img src="/sources/Data/${temp.id}/1.webp" alt="" class="header__cart-img" />
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${temp.nameProduct}</h5>
+              <div class="header__cart-item-price-wrap">
+                <span class="header__cart-item-price">${formatNumber(temp.price)} VND</span>
+                <span class="header__cart-item-multiply">x</span>
+                <span class="header__cart-item-cnt">${userActive.data.cart[i].quantity}</span>
+              </div>
+            </div>
+            <div class="header__cart-item-body">
+              <span class="header__cart-item-description">Phân loại: ${temp.type}</span>
+              <span class="header__cart-item-remove" onclick="delCartItem('${temp.id}','${temp.nameProduct}',event)">Xóa</span>
+            </div>
+          </div>`;
+            ulCart.appendChild(li);
+          }
+        }
+      }
+    };
+
+    var stateProfile = (sta, event) => {
+      localStorage.setItem("stateProfile", sta);
+    }
+    // Đẩy sản phẩm/xóa sản phẩm khỏi giỏ hàng
+    var addCartItem = (itemId, itemName, event, increase = 1) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (curUser == "-1") {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/error.png"
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+        toast.show();
+      } else {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/success.png"
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Thêm ${itemName} thành công!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+        toast.show();
+        const userCart = userList[parseInt(curUser)].data.cart;
+        const existingItem = userCart.find(item => item.item === itemId);
+        if (existingItem) {
+          existingItem.quantity += increase;
+        } else {
+          userCart.push({ item: itemId, quantity: increase });
+        }
+
+        localStorage.setItem("userList", JSON.stringify(userList));
+        if (userActive) {
+          let temp = userActive.data.cart.length;
+          const headerNotice = document.querySelector('.header__cart-notice');
+          if (temp > 0) {
+            headerNotice.style.display = "block";
+            headerNotice.innerText = `${temp}`;
+          } else headerNotice.style.display = "none";
+        }
+      }
+    }
+    var subCartItem = (itemId, itemName, event, decrease = 1) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (curUser == "-1") {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/error.png";
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+        toast.show();
+      } else {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/success.png";
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Đã bớt ${itemName} thành công!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+        toast.show();
+
+        const userCart = userList[parseInt(curUser)].data.cart;
+        const existingItem = userCart.find(item => item.item === itemId);
+
+        if (existingItem) {
+          existingItem.quantity -= decrease;
+          if (existingItem.quantity <= 0) {
+            const itemIndex = userCart.indexOf(existingItem);
+            if (itemIndex > -1) {
+              userCart.splice(itemIndex, 1);
+            }
+          }
+        }
+
+        localStorage.setItem("userList", JSON.stringify(userList));
+
+        if (userActive) {
+          let temp = userActive.data.cart.length;
+          const headerNotice = document.querySelector('.header__cart-notice');
+          if (temp > 0) {
+            headerNotice.style.display = "block";
+            headerNotice.innerText = `${temp}`;
+          } else headerNotice.style.display = "none";
+        }
+      }
+    }
+
+    var delCartItem = (itemId, itemName, event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (curUser == "-1") {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/error.png"
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Vui lòng đăng nhập để sử dụng tính năng này!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+        toast.show();
+      } else {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/success.png"
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Xóa ${itemName} thành công!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+        toast.show();
+        userList[parseInt(curUser)].data.cart = userList[parseInt(curUser)].data.cart.filter(item => item.item !== itemId);
+        localStorage.setItem("userList", JSON.stringify(userList));
+        if (userActive) {
+          let temp = userActive.data.cart.length;
+          const headerNotice = document.querySelector('.header__cart-notice');
+          if (temp > 0) {
+            headerNotice.style.display = "block";
+            headerNotice.innerText = `${temp}`;
+          } else headerNotice.style.display = "none";
+        }
+        showCart();
+      }
+    };
+
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Lắng nghe sự kiện cuộn lên
+    window.onscroll = function () {
+      let topButton = document.getElementById("top-button");
+      if (
+        document.body.scrollTop > 200 ||
+        document.documentElement.scrollTop > 200
+      ) {
+        topButton.classList.add("show");
+      } else {
+        topButton.classList.remove("show");
+      }
+    };
+
+    // Đăng xuất
+    var logout = () => {
+      window.localStorage.setItem('currentUser', "-1");
+      if (typeof localStorage["adClosedDate"] !== "undefined") localStorage.removeItem("adClosedDate");
+      if (typeof localStorage["currentPage"] !== "undefined") localStorage.removeItem("currentPage");
+      window.localStorage.setItem('searchData', JSON.stringify([]));
+      location.reload();
+    }
+    // xư kiện đăng nhập đăng xuất
+    var toLogin = (e) => {
+      window.localStorage.setItem("currentPage", location.pathname);
+      window.location.href = "login.html";
+    }
+    var toSignup = (e) => {
+      window.localStorage.setItem("currentPage", location.pathname);
+      window.location.href = "signup.html";
+    }
+
+    // Search input
+    var searchData;
+    const search = document.querySelector('#header-search');
+    const ulSearch = document.querySelector('.header__search-history-list');
+    var showHistory = (e) => {
+      ulSearch.innerHTML = "";
+      if (curUser == "-1") searchData = JSON.parse(localStorage.getItem("searchData"));
+      else searchData = userActive.data.historySearch;
+      for (let i = searchData.length - 1; i >= Math.max(0, searchData.length - 5); i--) {
+        let li = document.createElement('li');
+        li.classList.add('header__search-history-item');
+        li.innerHTML = `<a  href="#" onclick="searchItem(this)">${searchData[i]}<i class="fas fa-times" onclick=delHistory(${i},event)></i></a>`;
+        ulSearch.appendChild(li);
+      }
+    }
+    var delHistory = (index, event) => {
+      event.stopPropagation();
+      if (curUser == "-1") {
+        searchData.splice(index, 1);
+        window.localStorage.setItem("searchData", JSON.stringify(searchData));
+      }
+      else {
+        userList[parseInt(curUser)].data.historySearch.splice(index, 1);
+        window.localStorage.setItem("userList", JSON.stringify(userList));
+      }
+      showHistory();
+    }
+
+
+    const searchHistory = document.querySelector('.header__search-history');
+    search.addEventListener('focus', () => {
+      searchHistory.style.display = 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.header__search-input') && !event.target.closest('.header__search-history') && !event.target.closest('.header__search-history-item')) {
+        searchHistory.style.display = 'none';
+      }
+    });
+    search.onfocus = showHistory();
+
+
+    var searchHandle = (e) => {
+      if (e.key === "Enter") {
+        search.value = search.value.trim();
+        if (search.value !== "") {
+          if (curUser == "-1") {
+            searchData.push(search.value);
+            window.localStorage.setItem("searchData", JSON.stringify(searchData));
+          } else {
+            userList[parseInt(curUser)].data.historySearch.push(search.value);
+            window.localStorage.setItem("userList", JSON.stringify(userList));
+          }
+          window.localStorage.setItem("curSearch", search.value);
+          search.value = "";
+          window.location.href = "product.html";
+        }
+      }
+    }
+    var searchClick = (e) => {
+      search.value = search.value.trim();
+      if (search.value !== "") {
+        if (curUser == "-1") {
+          searchData.push(search.value);
+          window.localStorage.setItem("searchData", JSON.stringify(searchData));
+        } else {
+          userList[parseInt(curUser)].data.historySearch.push(search.value);
+          window.localStorage.setItem("userList", JSON.stringify(userList));
+        }
+        window.localStorage.setItem("curSearch", search.value);
+        search.value = "";
+        window.location.href = "product.html";
+      }
+    }
+    var searchItem = (item) => {
+      window.localStorage.setItem("curSearch", item.textContent);
+      window.location.href = "product.html";
+    }
+    // đi tới trang chi tiết sản phẩm
+    var goProduct = (index) => {
+      window.open('product-items.html?id=' + index, '_self');
+    }
+  </script>
+</body>
+
+</html>

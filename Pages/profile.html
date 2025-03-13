@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ sơ</title>
+  <link rel="shortcut icon" href="/sources/imgs/home/short-cut.png" type="image/x-icon">
+  <link rel="stylesheet" href="/sources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/sources/cssFolder/index.css" />
+  <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css">
+  <script src="/sources/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+  <script>
+    let currentUser = parseInt(localStorage.getItem('currentUser'));
+    if (currentUser == "-1") {
+      localStorage.setItem("currentPage", "profile.html");
+      window.location.replace("login.html");
+    }
+  </script>
+  <style>
+    /* css ngoài cấm đụng vào đụng vào là hỏng */
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-top: 85vh;
+      border: 1px solid;
+      overflow-x: hidden;
+    }
+
+    .iframe-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tab-hover:hover {
+      cursor: pointer;
+      color: #ffc107;
+    }
+
+    .avatar-tab {
+      display: inline-block;
+      margin: 5px 0px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 1px solid;
+      background-image: url('../sources/imgs/home/user.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .avatar {
+      display: inline-block;
+      margin: 5px 0px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 1px solid;
+      background-image: url('../sources/imgs/home/user.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+  <style>
+    /* Profile css */
+
+    .container-bg-color {
+      background-color: #f4f1ff;
+    }
+
+    .left-nav {
+      padding: 25px 18px;
+    }
+
+    .main-content {
+      background-color: #fff;
+      margin-top: 25px;
+      padding: 7px 32px;
+      border-radius: 7px;
+    }
+
+    .profile-edit {
+      all: unset;
+      color: #9897a2;
+    }
+
+    .profile-edit:hover {
+      cursor: pointer;
+    }
+
+    .list-group-item-custom {
+      background-color: #eae5d6 ;
+      border: none !important;
+      padding: 2px 13px !important;
+    }
+
+    #changeAvatar {
+      align-items: center;
+      gap: 30px;
+    }
+
+    .profile-information {
+      max-width: 400px;
+      margin: 23px 0;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .form-group span {
+      font-size: 14px;
+      font-weight: 600;
+      margin-right: 10px;
+      width: 130px;
+      text-align: right;
+    }
+
+    .email-text {
+      font-weight: normal;
+      color: #555;
+      margin-right: 5px;
+    }
+
+    .change-link {
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .change-link:hover {
+      text-decoration: underline;
+    }
+
+    .form-group label {
+      margin-right: 10px;
+      font-weight: normal;
+    }
+
+    .button-center {
+      display: flex;
+      justify-content: center;
+    }
+
+    .save-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .save-button:hover {
+      background-color: #0056b3;
+    }
+
+    /*Change password*/
+
+    #passwordForm {
+      max-width: 400px;
+      margin: 23px 0;
+    }
+
+    .form-content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    table td {
+      padding: 8px;
+      vertical-align: middle;
+    }
+
+    table td:first-child {
+      text-align: right;
+      width: 120px;
+      font-weight: 600;
+    }
+
+    table input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .button-center {
+      display: flex;
+      justify-content: center;
+    }
+
+    .save-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .save-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body style="background-color: #eae5d6;">
+  <div class="app">
+    <header class="header_content">
+      <!-- Phần logo và tính năng header -->
+      <div
+        class="header_top d-flex flex-row align-items-center justify-content-around bg-black text-center text-secondary">
+        <div class="header_top_logo" style="padding-left: 25px" id="top">
+          <a href="../index.html"><img src="/sources/imgs/home/logo.png" width="150px" alt="" /></a>
+        </div>
+        <div class="col-md-7 mx-auto">
+          <div class="input-group">
+            <input onkeypress="searchHandle(event)" id="header-search"
+              class="form-control border-end-0 border rounded-pill header__search-input" type="search"
+              placeholder="Vui lòng nhập sản phẩm tìm kiếm" />
+            <span class="input-group-append">
+              <button onclick="searchClick(event)"
+                class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+            <!-- History search box -->
+            <div class="header__search-history">
+              <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>
+              <ul class="header__search-history-list">
+                <!-- <li class="header__search-history-item">
+                    <a href="#">
+                      BẬT MÍ 5.5 - SĂN TRƯỚC MÃ 5.5
+                      <img src="https://cf.shopee.vn/file/491389dce9eabc3510a3e8a21cc40ef7" alt="Sale" />
+                      <i class="fas fa-times"></i>
+                    </a>
+                  </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="header_top_function">
+          <ul class="d-flex flex-row list-group" style="margin-right: 20px">
+            <li class="list-group-item text-secondary boder-none text-white poiter">
+              <div class="tnh-country-flag">
+                <img src="https://s.alicdn.com/@u/mobile/g/common/flags/1.0.0/assets/vn.png" height="20px"
+                  loading="lazy" />
+                <span> VN <i class="fas fa-angle-down"></i></span>
+              </div>
+            </li>
+            <li onmouseenter="showListMess()"
+              class="list-group-item text-secondary boder-none text-white poiter mess-icon-container">
+              <span><i class="fas fa-comments"></i></span>
+              <div class="mess-container">
+                <h2 class="text-secondary" style="margin-bottom: 8px;">Tin nhắn</h2>
+                <!-- <p class="text-secondary">Không có tin nhắn nào</p> -->
+                <ul class="mess-box"></ul>
+              </div>
+            </li>
+            <li onmouseenter="showListNotice()"
+              class="list-group-item text-secondary boder-none text-white header__navbar-item--has-notify poiter">
+              <span><i class="fas fa-bell"></i></span>
+              <!-- Header Notification  -->
+              <div class="header__notify">
+                <header class="header__notify-header">
+                  <h3>Thông báo mới nhận</h3>
+                </header>
+                <ul class="header__notify-list"></ul>
+                <footer class="header__notify-footer">
+                  <a href="#" class="header__notify-footer-btn">
+                    Xem thêm
+                  </a>
+                </footer>
+              </div>
+            </li>
+            <li onmouseenter="showCart()" class="list-group-item text-secondary boder-none text-white">
+              <div class="header__cart-wrap">
+                <i onclick="goProfile()" class="header__cart-icon fas fa-shopping-cart"></i>
+
+                <div class="header__cart-list">
+                  <!-- <h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+                    
+                    <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+                    <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>
+                    <ul class="header__cart-list-item"></ul>
+                    
+                    <a href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a> -->
+                </div>
+                <span class="header__cart-notice"></span>
+              </div>
+            </li>
+            <li id="stateLogin"
+              class="list-group-item text-secondary rounded-pill bg-orange text-white user-icon-container poiter">
+        </li>
+        </ul>
+      </div>
+  </div>
+  <!-- Phần navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav m-auto">
+          <li class="nav-item active">
+            <a href="../index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="product.html" class="nav-link">Product</a>
+          </li>
+          <!-- <li class="nav-item"><a href="#information" class="nav-link">Blog</a></li> -->
+          <li class="nav-item">
+            <a href="#footer" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  </header>
+  <!-- Toast add/ remove cart -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 20;">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="/sources/imgs/home/success.png" class="rounded me-2" alt="..." width="15px">
+        <strong class="me-auto">Thông báo</strong>
+        <small>Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body"></div>
+    </div>
+  </div>
+  <div class="container pb-5 row gx-0 container-bg-color" style="height: 120vh;background-color: #eae5d6;">
+    <!-- phần tab chọn  -->
+    <article class="col-sm-3 left-nav">
+      <div class="d-flex align-items-center gap-3">
+        <div class="avatar-tab"></div>
+        <div>
+          <div class="fw-bold"><span id="nameInTab"></span></div>
+          <div>
+            <i class="fas fa-pen" style="color: #9897a2;"></i>
+            <a class="profile-edit">Sửa Hồ Sơ</a>
+          </div>
+
+        </div>
+      </div>
+      <section>
+        <div class="mt-3">
+          <div id="TK" class="tab-hover"><i class="fas fa-user" style="margin-right: 7px; color: #9897a2;"></i>Tài khoản
+            của tôi</div>
+          <ul id="TKList" class="list-group list-group-flush mt-1">
+            <div class="list-group-item list-group-item-custom list-group-item-action">
+              <input type="radio" name="TK" id="HS" checked>
+              <label for="HS" class="tab-hover">Hồ sơ</label>
+            </div>
+            <div class="list-group-item list-group-item-custom list-group-item-action">
+              <input type="radio" name="TK" id="MK">
+              <label for="MK" class="tab-hover">Mật khẩu</label>
+            </div>
+          </ul>
+        </div>
+        <div class="mt-2">
+          <div id="DH" class="tab-hover"><i class="fas fa-shopping-cart"
+              style="margin-right: 7px; color: #9897a2;"></i>Đơn hàng</div>
+        </div>
+      </section>
+    </article>
+    <article class="main-content col-sm-9">
+      <!-- phần tài khoản -->
+      <section id="myAcc">
+        <!-- form hồ sơ -->
+        <div id="profileForm">
+          <form action="" id="profile" onsubmit="return checkFrmVali(this);">
+            <fieldset>
+              <legend>
+                <h3>Hồ sơ của tôi</h3>
+              </legend>
+              <div class="border-bottom pb-1">Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+              <div id="changeAvatar" class="d-flex mt-3">
+                <div class="avatar"></div>
+                <div>
+                  <input type="file" accept=".jpg,.jpeg,.png">
+                  <div>Dụng lượng file tối đa 1 MB</div>
+                  <div>Định dạng:.JPG, .JPEG, .PNG</div>
+                </div>
+              </div>
+              <div class="profile-information">
+                <div class="form-group">
+                  <span>Tên đăng nhập</span>
+                  <input type="text" id="userNameFormProfile" disabled>
+                </div>
+                <div class="form-group">
+                  <span>Tên</span>
+                  <input type="text" id="nameFormProfile" disabled pattern="^(?!\s*$).+">
+                </div>
+                <div class="form-group">
+                  <span>Email</span>
+                  <input value="n*****p@gmail.com" disabled id="emailFormProfile"></input>
+                </div>
+                <div class="form-group">
+                  <span>Số điện thoại</span>
+                  <input style="text-align: right;" value="" id="phoneNumFormProfile" disabled
+                    pattern="^[0-9]{10}$"></input>
+                </div>
+                <div class="form-group">
+                  <span>Giới tính</span>
+                  <label><input type="radio" name="gender" value="male" disabled> Nam</label>
+                  <label><input type="radio" name="gender" value="female" disabled> Nữ</label>
+                  <label><input type="radio" name="gender" value="orther" disabled> Khác</label>
+                </div>
+                <div class="form-group">
+                  <span>Địa chỉ giao hàng</span>
+                  <textarea id="address" disabled style="text-align: left;" cols="32" rows="3"></textarea>
+                </div>
+                <div class="form-group button-center">
+                  <button class="save-button" id="buttonChange">Sửa</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <!-- form đổi mật khẩu  -->
+        <div id="passwordForm" class="d-none">
+          <form action="" id="oldPass">
+            <fieldset>
+              <legend>
+                <h3>Mật khẩu</h3>
+              </legend>
+              <div class="form-content">
+                <label for="oldPassword">
+                  <h6>Nhập mật khẩu hiện tại</h6>
+                </label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="password" id="oldPassword" class="form-control" placeholder="Nhập mật khẩu" required
+                      style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                    <div class="input-group-text" id="toggleOldPassword"
+                      style="cursor: pointer; background-color: #fff; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                      <i class="bi bi-eye-slash"></i>
+                    </div>
+                    <div class="invalid-feedback" id="oldPasswordAlert">Vui lòng nhập
+                      mật khẩu.</div>
+                  </div>
+                </div>
+                <div class="button-center">
+                  <button class="save-button" id="oldPasswordButton">Xác nhận</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+
+          <form action="" id="changePassword" class="was-validated d-none">
+            <fieldset>
+              <legend>
+                <h3>Đổi mật khẩu</h3>
+              </legend>
+              <div class="form-content">
+                <label for="passwordFormProfile">
+                  <h6>Mật khẩu mới</h6>
+                </label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="password" id="passwordFormProfile" class="form-control" placeholder="Nhập mật khẩu"
+                      required minlength="6" maxlength="18"
+                      style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                    <div class="input-group-text" id="togglePasswordFormProfile"
+                      style="cursor: pointer; background-color: #fff; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                      <i class="bi bi-eye-slash"></i>
+                    </div>
+                    <div class="invalid-feedback" id="passwordFormProfileAlert1">Vui lòng nhập
+                      mật khẩu.</div>
+                    <div class="invalid-feedback" id="passwordFormProfileAlert2"></div>
+                    <div class="invalid-feedback" id="passwordFormProfileAlert3"></div>
+                    <div class="invalid-feedback" id="passwordFormProfileAlert4"></div>
+                    <div class="invalid-feedback" id="passwordFormProfileAlert5"></div>
+                    <div class="invalid-feedback" id="passwordFormProfileAlert6"></div>
+                  </div>
+                </div>
+                <label for="confirmNewPassword">
+                  <h6>Xác nhận mật khẩu</h6>
+                </label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="password" id="confirmNewPassword" class="form-control" placeholder="Nhập mật khẩu"
+                      required pattern="^$" maxlength="18"
+                      style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                    <div class="input-group-text" id="toggleConfirmNewPassword"
+                      style="cursor: pointer; background-color: #fff; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                      <i class="bi bi-eye-slash"></i>
+                    </div>
+                    <div class="invalid-feedback" id="confirmNewPasswordAlert">Phần mật khẩu
+                      chưa hoàn thiện.</div>
+                  </div>
+                </div>
+                <div class="button-center">
+                  <button class="save-button">Lưu</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+      <!-- phần giỏ hàng -->
+      <section id="myOder" class="d-none">
+        <h3>Đơn Hàng</h3>
+        <div class="btn-group" style="width: 100%;">
+          <button id="giohang" class="btn btn-outline-warning">Giỏ hàng</button>
+          <button id="hoanthanh" class="btn btn-outline-warning">Chờ xác nhận</button>
+          <button id="vanchuyen" class="btn btn-outline-warning">Vận chuyển</button>
+          <button id="dondadat" class="btn btn-outline-warning">Lịch sử mua hàng</button>
+        </div>
+        <div class="iframe-container mt-3"><iframe class="iframe-content" src="donhang/giohang.html"
+            id="orderInformation"></iframe></div>
+      </section>
+    </article>
+  </div>
+
+  <!-- Phần Footer -->
+  <footer class="bg-dark text-center text-lg-start text-white" id="footer">
+    <div class="container p-4">
+      <div class="row mt-4">
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Chính sách</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-user-lock fa-fw fa-sm me-2"></i>Chính sách bảo mật</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Chính sách vận chuyển</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-hands-helping fa-fw fa-sm me-2"></i>Chính sách đổi trả</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-book fa-fw fa-sm me-2"></i>Điều
+                khoản sử dụng</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Kết nối với chúng tôi</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-facebook-f fa-fw fa-sm me-2"></i>Facebook</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-instagram fa-fw fa-sm me-2"></i>Instagram</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-twitter fa-fw fa-sm me-2"></i>Twitter</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fab fa-youtube fa-fw fa-sm me-2"></i>YouTube</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-school fa-fw fa-sm me-2"></i>Trường
+                đại học Cần Thơ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-road fa-fw fa-sm me-2"></i>Khu II,
+                Đ. 3 Tháng 2, Xuân Khánh, Ninh Kiều, Cần Thơ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-map-marker-alt fa-fw fa-sm me-2"></i>Trường CNTT-TT</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Hỗ trợ khách hàng</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-phone-alt fa-fw fa-sm me-2"></i>Hotline: +84 123 456 789 (24/7)</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i
+                  class="fas fa-envelope fa-fw fa-sm me-2"></i>Email: thelightshop@gmail.com</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white text-decoration-none"><i class="fas fa-question fa-fw fa-sm me-2"></i>Câu
+                hỏi thường gặp (FAQ)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="#top" class="scroll-top-btn" id="top-button">
+      <i class="fas fa-arrow-alt-circle-up"></i>
+    </a>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2024 CT188:
+      <a class="text-white" href="#">Nhóm 7</a>
+    </div>
+  </footer>
+  </div>
+
+
+
+  <script>
+    var myAcc = document.getElementById('myAcc');
+    var myOder = document.getElementById('myOder');
+    function switchTab(my) {
+      myAcc.classList.add('d-none');
+      myOder.classList.add('d-none');
+
+      if ('myAcc' === my) {
+        myAcc.classList.remove('d-none');
+        localStorage.setItem('stateProfile', 'user');
+      }
+      if ('myOder' === my) {
+        myOder.classList.remove('d-none');
+        localStorage.setItem('stateProfile', 'cart');
+      }
+    }
+    document.getElementById('TK').addEventListener("click", function () {
+      switchTab('myAcc');
+      document.getElementById('TKList').classList.remove('d-none');
+    });
+    document.getElementById('DH').addEventListener("click", function () {
+      switchTab('myOder');
+      document.getElementById('TKList').classList.add('d-none');
+    });
+
+    var profileForm = document.getElementById('profileForm');
+    var passwordForm = document.getElementById('passwordForm');
+    function switchTabMy(formInfo) {
+      profileForm.classList.add('d-none');
+      passwordForm.classList.add('d-none');
+
+      if ('profileForm' === formInfo) profileForm.classList.remove('d-none');
+      if ('passwordForm' === formInfo) passwordForm.classList.remove('d-none');
+    }
+    document.getElementById('HS').addEventListener("click", function () {
+      switchTabMy('profileForm');
+    });
+    document.getElementById('MK').addEventListener("click", function () {
+      switchTabMy('passwordForm');
+    });
+
+    if (localStorage.getItem('stateProfile') === 'cart') {
+      switchTab('myOder');
+      document.getElementById('TKList').classList.add('d-none');
+    }
+
+  </script>
+  <!-- bắt lỗi form hồ sơ -->
+  <script>
+    function checkFrmVali(frm) {
+      return frm.checkValidity();
+    }
+  </script>
+  <!-- thao tác iframe -->
+  <script>
+    let orderInformation = document.getElementById('orderInformation');
+    function setButon(duongdan) {
+      orderInformation.src = "donhang/" + duongdan + ".html";
+    }
+    document.getElementById('giohang').onclick = function () { setButon('giohang'); };
+    document.getElementById('dondadat').onclick = function () { setButon('dondadat'); };
+    document.getElementById('hoanthanh').onclick = function () { setButon('hoanthanh'); };
+    document.getElementById('vanchuyen').onclick = function () { setButon('vanchuyen'); };
+  </script>
+  <script>
+    let userList = JSON.parse(localStorage.getItem('userList'));
+
+
+    let nameFormProfile = document.getElementById('nameFormProfile');
+    let userNameFormProfile = document.getElementById('userNameFormProfile');
+    let nameInTab = document.getElementById('nameInTab');
+    let emailFormProfile = document.getElementById('emailFormProfile');
+    let phoneNumFormProfile = document.getElementById('phoneNumFormProfile');
+    let address = document.getElementById('address');
+    let gender = document.getElementsByName('gender');
+
+    nameInTab.innerText = nameFormProfile.value = userList[currentUser].fullName;
+    userNameFormProfile.value = userList[currentUser].userName;
+    emailFormProfile.value = userList[currentUser].email;
+    for (let i = 0; i < gender.length; ++i) {
+      if (userList[currentUser].gender === gender[i].value) gender[i].disabled = false, gender[i].checked = true;
+    }
+    if (userList[currentUser].phoneNum)
+      phoneNumFormProfile.value = '0' + userList[currentUser].phoneNum[1] + '******' + userList[currentUser].phoneNum[8] + userList[currentUser].phoneNum[9];
+    else phoneNumFormProfile.value = "";
+    address.value = userList[currentUser].address;
+  </script>
+  <script>
+    let buttonChange = document.getElementById('buttonChange');
+    var count = 0;
+    let profile = document.getElementById('profile');
+    profile.onsubmit = function (event) {
+      event.preventDefault();
+      count = (count + 1) & 1;
+      if (count) {
+        nameFormProfile.disabled = false;
+        for (let i = 0; i < gender.length; ++i) {
+          gender[i].disabled = false;
+        }
+        phoneNumFormProfile.value = userList[currentUser].phoneNum;
+        phoneNumFormProfile.disabled = false;
+        address.disabled = false;
+        buttonChange.innerText = 'Lưu';
+      } else {
+        nameInTab.innerText = nameFormProfile.value = nameFormProfile.value.trim();
+        userList[currentUser].fullName = nameFormProfile.value;
+        nameFormProfile.disabled = true;
+        for (let i = 0; i < gender.length; ++i) {
+          if (!gender[i].checked) gender[i].disabled = true;
+          else userList[currentUser].gender = gender[i].value;
+        }
+        userList[currentUser].phoneNum = phoneNumFormProfile.value;
+        if (phoneNumFormProfile.value != "")
+          phoneNumFormProfile.value = '0' + userList[currentUser].phoneNum[1] + '******' + userList[currentUser].phoneNum[8] + userList[currentUser].phoneNum[9];
+        phoneNumFormProfile.disabled = true;
+        address.value = address.value.trim();
+        userList[currentUser].address = address.value;
+        address.disabled = true;
+        localStorage.setItem('userList', JSON.stringify(userList));
+        buttonChange.innerText = 'Sửa';
+      }
+    }
+  </script>
+
+  <script>
+    let pwd = document.getElementById('oldPassword');
+    pwd.pattern = userList[currentUser].pwd;
+    let pwdAlert = document.getElementById('oldPasswordAlert');
+    let oldPass = document.getElementById('oldPass');
+    pwd.oninput = function (event) {
+      oldPass.classList.remove('was-validated');
+      if (pwd.value.length) pwdAlert.innerText = "Mật khẩu không đúng";
+      else pwdAlert.innerText = "Vui lòng nhập mật khẩu.";
+    }
+    let oldPasswordButton = document.getElementById('oldPasswordButton');
+    oldPasswordButton.onclick = function () {
+      oldPass.classList.add('was-validated');
+      if (pwd.value.length) pwdAlert.innerText = "Mật khẩu không đúng";
+      else pwdAlert.innerText = "Vui lòng nhập mật khẩu.";
+    }
+    oldPass.onsubmit = function (event) {
+      event.preventDefault();
+
+      oldPass.classList.add('d-none');
+      document.getElementById('changePassword').classList.remove('d-none');
+    }
+  </script>
+
+  <!-- kiểm tra phần nhập mật khẩu và xác nhận mật khẩu -->
+  <script>
+    let passwordFormProfile = document.getElementById('passwordFormProfile');
+    // Thiết lập pattern cho mật khẩu
+    passwordFormProfile.setAttribute('pattern', "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&_])[A-Za-z0-9@$!%*?&_]{8,}$");
+
+    passwordFormProfile.oninput = function (event) {
+      let passVal = passwordFormProfile.value;
+
+      // Kiểm tra mật khẩu trống
+      if (passVal.length == 0) {
+        document.getElementById('passwordFormProfileAlert1').innerText = "Vui lòng nhập mật khẩu";
+        document.getElementById('passwordFormProfileAlert2').innerText = "";
+        document.getElementById('passwordFormProfileAlert3').innerText = "";
+        document.getElementById('passwordFormProfileAlert4').innerText = "";
+        document.getElementById('passwordFormProfileAlert5').innerText = "";
+        document.getElementById('passwordFormProfileAlert6').innerText = "";
+        return; // Dừng lại nếu mật khẩu trống
+      }
+
+      // Kiểm tra độ dài mật khẩu
+      if (passVal.length < 6) {
+        document.getElementById('passwordFormProfileAlert1').innerText = "Yêu cầu tối thiểu 6 ký tự";
+      } else {
+        document.getElementById('passwordFormProfileAlert1').innerText = "";
+      }
+
+      // Khởi tạo các biến kiểm tra
+      let checkinhoa = false;
+      let checkinthuong = false;
+      let checkchuso = false;
+      let checkkitudacbiet = false;
+      let checkkitukhac = false;
+
+      // Kiểm tra các điều kiện mật khẩu
+      for (let i = 0; i < passVal.length; ++i) {
+        if (/[A-Z]/.test(passVal[i])) checkinhoa = true; // Kiểm tra chữ hoa
+        if (/[a-z]/.test(passVal[i])) checkinthuong = true; // Kiểm tra chữ thường
+        if (/[0-9]/.test(passVal[i])) checkchuso = true; // Kiểm tra số
+        if (/[@$!%*?&_]/.test(passVal[i])) checkkitudacbiet = true; // Kiểm tra ký tự đặc biệt
+        if (/[^A-Za-z0-9@$!%*?&_]/.test(passVal[i])) checkkitukhac = true;
+      }
+
+      // Thêm/xóa thông báo
+      document.getElementById('passwordFormProfileAlert2').innerText = checkinhoa ? '' : 'Ít nhất một chữ cái in hoa trong bảng chữ cái tiếng Anh.';
+      document.getElementById('passwordFormProfileAlert3').innerText = checkinthuong ? '' : 'Ít nhất một chữ cái in thường trong bảng chữ cái tiếng Anh.';
+      document.getElementById('passwordFormProfileAlert4').innerText = checkchuso ? '' : 'Ít nhất một chữ số từ 0 đến 9.';
+      document.getElementById('passwordFormProfileAlert5').innerText = checkkitudacbiet ? '' : 'Ít nhất một ký tự đặc biệt thuộc @ $ ! % * ? & _';
+      document.getElementById('passwordFormProfileAlert6').innerText = !checkkitukhac ? '' : 'Không đặt bất kì ký tự nào không thuộc các nhóm trên';
+
+      // đặt thông báo cho phần xác nhận mật khẩu trong trường hợp đúng và sai ở phần mật khẩu
+      let confirmNewPassword = document.getElementById('confirmNewPassword');
+      if (passVal.length < 8 || !checkinhoa || !checkinthuong || !checkchuso || !checkkitudacbiet || checkkitukhac) {
+        document.getElementById('confirmNewPasswordAlert').innerText = "Phần mật khẩu chưa hoàn thiện";
+        confirmNewPassword.pattern = "^$";
+      } else {
+        document.getElementById('confirmNewPasswordAlert').innerText = "Mật khẩu không khớp";
+        confirmNewPassword.pattern = "^" + passwordFormProfile.value + "$";
+      }
+    };
+
+  </script>
+  <!-- xem mật khẩu và xem xác nhận mật khẩu -->
+  <script>
+    function see(event) {
+      let passwordInput;
+      if (event.currentTarget.id === 'toggleOldPassword') passwordInput = document.getElementById('oldPassword');
+      else {
+        passwordInput = event.currentTarget.id === 'togglePasswordFormProfile'
+          ? document.getElementById('passwordFormProfile')
+          : document.getElementById('confirmNewPassword');
+      }
+      const icon = event.currentTarget.querySelector('i'); // Truy cập vào icon bên trong phần tử được nhấn
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text'; // Hiển thị mật khẩu
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye'); // Chuyển biểu tượng sang mắt mở
+      } else {
+        passwordInput.type = 'password'; // Ẩn mật khẩu
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash'); // Chuyển biểu tượng sang mắt đóng
+      }
+    }
+    document.getElementById('toggleOldPassword').addEventListener('click', see);
+    document.getElementById('togglePasswordFormProfile').addEventListener('click', see);
+    document.getElementById('toggleConfirmNewPassword').addEventListener('click', see);
+  </script>
+
+  <script>
+    let changePassword = document.getElementById('changePassword');
+    changePassword.onsubmit = function (event) {
+      let newPassword1 = document.getElementById('passwordFormProfile');
+      let newPassword2 = document.getElementById('confirmNewPassword');
+      userList[currentUser].pwd = newPassword2.value;
+      localStorage.setItem('userList', JSON.stringify(userList));
+    }
+  </script>
+  <script>
+    // Kiểm tra đã đăng nhập chưa
+    window.onload = (e) => {
+      if (typeof localStorage["searchData"] === "undefined") {
+        localStorage.setItem("searchData", JSON.stringify([]));
+      }
+      if (typeof localStorage["curSearch"] === "undefined") {
+        localStorage.setItem("curSearch", "");
+      }
+      if (typeof localStorage["currentUser"] === "undefined") {
+        localStorage.setItem("currentUser", "-1");
+      }
+    }
+    const curUser = window.localStorage.getItem("currentUser");
+    // reset trang khi đổi trạng thái đăng nhập
+    window.addEventListener("storage", (event) => {
+      if (event.key === 'currentUser' && event.newValue !== curUser) location.reload();
+    });
+
+
+    // Lấy danh sách user và sản phẩm
+    // const userList = JSON.parse(window.localStorage.getItem("userList")) || [];
+    const productInfoList = JSON.parse(localStorage.getItem('productList')) || [];
+    let userActive = userList[parseInt(curUser)];
+    if (userActive) {
+      let temp = userActive.data.cart.length;
+      const headerNotice = document.querySelector('.header__cart-notice');
+      if (temp > 0) {
+        headerNotice.style.display = "block";
+        headerNotice.innerText = `${temp}`;
+      } else headerNotice.style.display = "none";
+    }
+    let len = userActive.data.cart.length;
+
+window.addEventListener("storage", (event) => {
+    if (event.key === 'userList') {
+        const userList = JSON.parse(event.newValue);
+        if (userList[parseInt(curUser)] && userActive) {
+            const currentUserCartLength = userList[parseInt(curUser)].data.cart.length;
+            if (currentUserCartLength !== len) {
+                len = currentUserCartLength;
+                const headerNotice = document.querySelector('.header__cart-notice');
+                if (currentUserCartLength > 0) {
+                    headerNotice.style.display = "block";
+                    headerNotice.innerText = `${currentUserCartLength}`;
+                } else {
+                    headerNotice.style.display = "none";
+                }
+            }
+        }
+    }
+});
+    // Trạng thái đăng nhập
+    document.addEventListener('DOMContentLoaded', () => {
+      var userState = document.querySelector('#stateLogin');
+      if (curUser == "-1") {
+        userState.innerHTML = `<i class="fas fa-user"></i>
+                <span onclick="toLogin(event)">Login</span>
+              <div class="login-container" >
+                <h2 class="text-secondary">Đăng nhập để tiếp tục</h2>
+                <button class="sign-in-btn rounded-pill "onclick="toLogin(event)">Đăng nhập</button>
+                <p class="text-secondary">Hoặc đăng kí tài khoản mới:</p>
+                <button class="sign-in-btn rounded-pill" onclick="toSignup(event)">Đăng kí</button>
+                <p class="agreement">
+                  <a href="#">Chính sách thành viên </a> và
+                  <a href="#">chính sách quyền riêng tư của TheLight.com.</a>
+                </p>`;
+      }
+      else {
+        userState.innerHTML = `<li class="header__navbar-item header__navbar-user">
+                            <img src="../sources/imgs/home/user.jpg" alt=""
+                                class="header__navbar-user-img">
+                            <span class="header__navbar-user-name">${userActive.fullName}</span>
+                            <ul class="header__navbar-user-menu">
+                                <li class="header__navbar-user-item">
+                                    <a href="profile.html" onclick="stateProfile('user')">Tài khoản của tôi</a>
+                                </li>
+                                <li class="header__navbar-user-item header__navbar-user-item--separate">
+                                    <a href="#" onclick="logout()">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>`;
+      }
+    })
+
+    // Tin nhắn
+    var showListMess = (e) => {
+      const ulMess = document.querySelector('.mess-box');
+      if (curUser == "-1") {
+        if (!ulMess.querySelector('.header__mess-item')) {
+          let li = document.createElement('li');
+          li.classList.add("header__mess-item", "header__mess-item--viewed");
+          li.innerHTML = `<a onclick="toLogin(event)" class='header__mess-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem tin nhắn</a>`;
+          ulMess.appendChild(li);
+        }
+      } else {
+        if (!ulMess.querySelector('p')) ulMess.innerHTML = `<p class="text-secondary">Không có tin nhắn nào</p>`;
+      }
+    }
+    // Thông báo
+    let currentNoticeCount = 4;
+    var showListNotice = (e) => {
+      const ulMess = document.querySelector('.header__notify-list');
+      const messFooter = document.querySelector(".header__notify-footer-btn");
+
+      if (curUser == "-1") {
+        messFooter.classList.remove("show");
+        if (!ulMess.querySelector('.header__notify-item')) {
+          let li = document.createElement('li');
+          li.classList.add("header__notify-item", "header__notify-item--viewed");
+          li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem thông báo</a>`;
+          ulMess.appendChild(li);
+        }
+      } else {
+        ulMess.innerHTML = "";
+        let productOfNoctify = productInfoList.filter(product =>
+          userActive.data.notificationsReceived.some(noticeItem => noticeItem.item === product.id)
+        );
+        for (let i = userActive.data.notificationsReceived.length - 1; i >= Math.max(0, userActive.data.notificationsReceived.length - currentNoticeCount); i--) {
+          let li = document.createElement('li');
+          li.classList.add("header__notify-item", "header__notify-item--viewed");
+          let temp = productOfNoctify.find(product => product.id == userActive.data.notificationsReceived[i].item);
+          if (userActive.data.notificationsReceived[i].state == 1) {
+            li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Đang trên đường vận chuyển!</span>
+                      </div>
+                    </a>`;
+            ulMess.appendChild(li);
+          } else {
+            li.innerHTML = `<a href="#" class="header__notify-link">
+                      <img src="/sources/Data/${temp.id}/1.webp" alt=""
+                        class="header__notify-img" />
+                      <div class="header__notify-info">
+                        <span class="header__notify-name">${temp.nameProduct}</span>
+                        <span class="header__notify-description">Hiện không thể đáp ứng đơn hàng!</span>
+                      </div>
+                    </a>`;
+            ulMess.appendChild(li);
+          }
+        }
+
+        let li = document.createElement('li');
+        li.classList.add("header__notify-item", "header__notify-item--viewed");
+        li.innerHTML = `<a href="#" class="header__notify-link">
+                    <img src="/sources/imgs/home/notice_welcom.webp" alt=""
+                      class="header__notify-img" />
+                    <div class="header__notify-info">
+                      <span class="header__notify-name">Chào mừng bạn đến với The Light Shop</span>
+                      <span class="header__notify-description">Rất vui được phục vụ bạn</span>
+                    </div>
+                  </a>`;
+        ulMess.appendChild(li);
+
+        messFooter.classList.add("show");
+      }
+    };
+    document.querySelector('.header__notify-footer-btn').addEventListener('click', (event) => {
+      event.preventDefault();
+      currentNoticeCount += 5;
+      showListNotice();
+    });
+    //  Giỏ hàng 
+    var goProfile = () => {
+      if (curUser != "-1") {
+        localStorage.setItem("stateProfile", "cart")
+        window.location.href = "profile.html"
+      }
+    }
+    var showCart = () => {
+      const cartContainer = document.querySelector('.header__cart-wrap');
+      const cartList = document.querySelector('.header__cart-list');
+      cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>`;
+
+      if (curUser == "-1") {
+        let ul = document.createElement('ul');
+        ul.classList.add("header__cart-list-item");
+        cartList.appendChild(ul);
+
+        let li = document.createElement('li');
+        li.classList.add("header__notify-item", "header__notify-item--viewed");
+        li.innerHTML = `<a onclick="toLogin(event)" class='header__notify-link justify-content-center' href='login.html'>Vui lòng đăng nhập để xem sản phẩm</a>`;
+        ul.appendChild(li);
+
+        document.querySelector('.header__cart-notice').style.display = "none";
+      } else {
+        let productOfCart = productInfoList.filter(product =>
+          userActive.data.cart.some(cartItem => cartItem.item === product.id)
+        );
+
+        if (productOfCart.length === 0) {
+          cartList.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+          <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+          <span class="header__cart-list--no-cart header__cart-no-cart-msg">Chưa có sản phẩm</span>`;
+          document.querySelector('.header__cart-notice').style.display = "none";
+        } else {
+          let ul = document.createElement('ul');
+          ul.classList.add("header__cart-list-item");
+          cartList.appendChild(ul);
+
+          let a = document.createElement('a');
+          a.classList.add("header__cart-view-cart", "btn", "btn--primary");
+          a.setAttribute("href", "profile.html");
+          a.innerText = "Xem giỏ hàng";
+          a.onclick = (event) => stateProfile("cart", event);
+          cartList.appendChild(a);
+
+          const ulCart = document.querySelector('.header__cart-list-item');
+          ulCart.innerHTML = "";
+
+          const headerNotice = document.querySelector('.header__cart-notice');
+          headerNotice.style.display = "block";
+          headerNotice.innerText = `${userActive.data.cart.length}`;
+
+          for (let i = userActive.data.cart.length - 1; i >= Math.max(0, userActive.data.cart.length - 5); i--) {
+            let temp = productOfCart.find(product => product.id == userActive.data.cart[i].item);
+            let li = document.createElement('li');
+            li.classList.add("header__cart-item");
+            li.onclick = (event) => goProduct(temp.id)
+            li.innerHTML = `
+          <img src="/sources/Data/${temp.id}/1.webp" alt="" class="header__cart-img" />
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${temp.nameProduct}</h5>
+              <div class="header__cart-item-price-wrap">
+                <span class="header__cart-item-price">${formatNumber(temp.price)} VND</span>
+                <span class="header__cart-item-multiply">x</span>
+                <span class="header__cart-item-cnt">${userActive.data.cart[i].quantity}</span>
+              </div>
+            </div>
+            <div class="header__cart-item-body">
+              <span class="header__cart-item-description">Phân loại: ${temp.type}</span>
+              <span class="header__cart-item-remove" onclick="delCartItem('${temp.id}','${temp.nameProduct}',event)">Xóa</span>
+            </div>
+          </div>`;
+            ulCart.appendChild(li);
+          }
+        }
+      }
+    };
+    var stateProfile = (sta, event) => {
+      localStorage.setItem("stateProfile", sta);
+    }
+    var delCartItem = (itemId, itemName, event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const toastNotice = document.querySelector(".toast-body");
+      toastNotice.textContent = `Xóa ${itemName} thành công!`;
+      const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+      toast.show();
+      userList[parseInt(curUser)].data.cart = userList[parseInt(curUser)].data.cart.filter(item => item.item !== itemId);
+      localStorage.setItem("userList", JSON.stringify(userList));
+      showCart();
+    };
+
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Lắng nghe sự kiện cuộn lên
+    window.onscroll = function () {
+      let topButton = document.getElementById("top-button");
+      if (
+        document.body.scrollTop > 200 ||
+        document.documentElement.scrollTop > 200
+      ) {
+        topButton.classList.add("show");
+      } else {
+        topButton.classList.remove("show");
+      }
+    };
+
+    // Đăng xuất
+    var logout = () => {
+      window.localStorage.setItem('currentUser', "-1");
+      if (typeof localStorage["adClosedDate"] !== "undefined") localStorage.removeItem("adClosedDate");
+      if (typeof localStorage["currentPage"] !== "undefined") localStorage.removeItem("currentPage");
+      window.localStorage.setItem('searchData', JSON.stringify([]));
+      location.reload();
+    }
+    // xư kiện đăng nhập đăng xuất
+    var toLogin = (e) => {
+      window.localStorage.setItem("currentPage", location.pathname);
+      window.location.href = "login.html";
+    }
+    var toSignup = (e) => {
+      window.localStorage.setItem("currentPage", location.pathname);
+      window.location.href = "signup.html";
+    }
+
+    // Search input
+    var searchData;
+    const search = document.querySelector('#header-search');
+    const ulSearch = document.querySelector('.header__search-history-list');
+    var showHistory = (e) => {
+      ulSearch.innerHTML = "";
+      if (curUser == "-1") searchData = JSON.parse(localStorage.getItem("searchData"));
+      else searchData = userActive.data.historySearch;
+      for (let i = searchData.length - 1; i >= Math.max(0, searchData.length - 5); i--) {
+        let li = document.createElement('li');
+        li.classList.add('header__search-history-item');
+        li.innerHTML = `<a  href="#" onclick="searchItem(this)">${searchData[i]}<i class="fas fa-times" onclick=delHistory(${i},event)></i></a>`;
+        ulSearch.appendChild(li);
+      }
+    }
+    var delHistory = (index, event) => {
+      event.stopPropagation();
+      if (curUser == "-1") {
+        searchData.splice(index, 1);
+        window.localStorage.setItem("searchData", JSON.stringify(searchData));
+      }
+      else {
+        userList[parseInt(curUser)].data.historySearch.splice(index, 1);
+        window.localStorage.setItem("userList", JSON.stringify(userList));
+      }
+      showHistory();
+    }
+
+
+    const searchHistory = document.querySelector('.header__search-history');
+    search.addEventListener('focus', () => {
+      searchHistory.style.display = 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.header__search-input') && !event.target.closest('.header__search-history') && !event.target.closest('.header__search-history-item')) {
+        searchHistory.style.display = 'none';
+      }
+    });
+    search.onfocus = showHistory();
+
+
+    var searchHandle = (e) => {
+      if (e.key === "Enter") {
+        search.value = search.value.trim();
+        if (search.value !== "") {
+          if (curUser == "-1") {
+            searchData.push(search.value);
+            window.localStorage.setItem("searchData", JSON.stringify(searchData));
+          } else {
+            userList[parseInt(curUser)].data.historySearch.push(search.value);
+            window.localStorage.setItem("userList", JSON.stringify(userList));
+          }
+          window.localStorage.setItem("curSearch", search.value);
+          search.value = "";
+          window.location.href = "product.html";
+        }
+      }
+    }
+    var searchClick = (e) => {
+      search.value = search.value.trim();
+      if (search.value !== "") {
+        if (curUser == "-1") {
+          searchData.push(search.value);
+          window.localStorage.setItem("searchData", JSON.stringify(searchData));
+        } else {
+          userList[parseInt(curUser)].data.historySearch.push(search.value);
+          window.localStorage.setItem("userList", JSON.stringify(userList));
+        }
+        window.localStorage.setItem("curSearch", search.value);
+        search.value = "";
+        window.location.href = "product.html";
+      }
+    }
+    var searchItem = (item) => {
+      window.localStorage.setItem("curSearch", item.textContent);
+      window.location.href = "product.html";
+    }
+    // đi tới trang chi tiết sản phẩm
+    var goProduct = (index) => {
+      window.open('product-items.html?id=' + index, '_self');
+    }
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

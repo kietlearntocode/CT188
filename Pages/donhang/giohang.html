@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/sources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/sources/cssFolder/index.css" />
+  <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <script src="/sources/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+  <!-- Custom Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- modal-dialog-centered để modal xuất hiện giữa màn hình -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Xác nhận mua hàng</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc chắn muốn mua sản phẩm này không?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary" id="confirmBuy">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Toast add/ remove cart -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 20;">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img id="stateToast" src="/sources/imgs/home/success.png" class="rounded me-2" alt="..." width="15px">
+        <strong class="me-auto">Thông báo</strong>
+        <small>Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body"></div>
+    </div>
+  </div>
+  <ul class="header__cart-list-item" style="max-height: fit-content;"></ul>
+  <script>
+    // Lấy danh sách user và sản phẩm
+    const userList = JSON.parse(window.localStorage.getItem("userList")) || [];
+    const productInfoList = JSON.parse(localStorage.getItem('productList')) || [];
+    const curUser = window.localStorage.getItem("currentUser");
+    let userActive = userList[parseInt(curUser)];
+
+    var showCart = () => {
+      let productOfCart = productInfoList.filter(product =>
+        userActive.data.cart.some(cartItem => cartItem.item === product.id)
+      );
+      const ulCart = document.querySelector('.header__cart-list-item');
+      ulCart.innerHTML = "";
+
+      if (productOfCart.length === 0) {
+        ulCart.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã thêm</h4>
+          <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+          <span class="header__cart-list--no-cart header__cart-no-cart-msg text-center">Chưa có sản phẩm</span>`;
+      } else {
+        for (let i = userActive.data.cart.length - 1; i >= 0; i--) {
+          let temp = productOfCart.find(product => product.id == userActive.data.cart[i].item);
+          let li = document.createElement('li');
+          li.classList.add("header__cart-item");
+          li.innerHTML = `
+          <img src="/sources/Data/${temp.id}/1.webp" alt="" class="header__cart-img" />
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${temp.nameProduct}</h5>
+              <div class="header__cart-item-price-wrap">
+                <span class="header__cart-item-price">${formatNumber(temp.price)} VND</span>
+                <span class="header__cart-item-multiply">x</span>
+                <span class="header__cart-item-cnt">${userActive.data.cart[i].quantity}</span>
+                <span class="header__cart-item-price"> = ${formatNumber(temp.price * userActive.data.cart[i].quantity)} VND</span>
+              </div>
+            </div>
+            <div class="header__cart-item-body">
+              <span class="header__cart-item-description">Phân loại: ${temp.type}</span>
+              <div class="button-container">
+    <button class="custom-button" onclick="subCartItem('${temp.id}','${temp.nameProduct}',event)"><i class="fas fa-arrow-down"></i></button>
+    <button class="custom-button" onclick="addCartItem('${temp.id}','${temp.nameProduct}',event)"><i class="fas fa-arrow-up"></i></button>
+    <button  class="custom-button" onclick="showConfirmModal('${temp.id}','${temp.nameProduct}',event,${userActive.data.cart[i].quantity},${temp.price})">Mua</button>
+    <button class="custom-button" onclick="delCartItem('${temp.id}','${temp.nameProduct}',event)">Xóa</button>
+  </div>
+            </div>
+
+          </div>`;
+          ulCart.appendChild(li);
+        }
+      }
+    };
+    showCart()
+    var addCartItem = (itemId, itemName, event, increase = 1) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const stateToast = document.querySelector("#stateToast");
+      stateToast.src = "/sources/imgs/home/success.png"
+      const toastNotice = document.querySelector(".toast-body");
+      toastNotice.textContent = `Thêm ${itemName} thành công!`;
+      const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+      toast.show();
+      const userCart = userList[parseInt(curUser)].data.cart;
+      const existingItem = userCart.find(item => item.item === itemId);
+      if (existingItem) {
+        existingItem.quantity += parseInt(increase);
+      } else {
+        userCart.push({ item: itemId, quantity: parseInt(increase) });
+      }
+
+      localStorage.setItem("userList", JSON.stringify(userList));
+      showCart()
+    }
+    var subCartItem = (itemId, itemName, event, decrease = 1) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const stateToast = document.querySelector("#stateToast");
+      stateToast.src = "/sources/imgs/home/success.png";
+      const toastNotice = document.querySelector(".toast-body");
+      toastNotice.textContent = `Đã bớt ${itemName} thành công!`;
+      const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+      toast.show();
+
+      const userCart = userList[parseInt(curUser)].data.cart;
+      const existingItem = userCart.find(item => item.item === itemId);
+
+      if (existingItem) {
+        existingItem.quantity -= decrease;
+        if (existingItem.quantity <= 0) {
+          const itemIndex = userCart.indexOf(existingItem);
+          if (itemIndex > -1) {
+            userCart.splice(itemIndex, 1);
+          }
+        }
+      }
+
+      localStorage.setItem("userList", JSON.stringify(userList));
+      showCart()
+    }
+    var delCartItem = (itemId, itemName, event, ok = true) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (ok) {
+        const stateToast = document.querySelector("#stateToast");
+        stateToast.src = "/sources/imgs/home/success.png"
+        const toastNotice = document.querySelector(".toast-body");
+        toastNotice.textContent = `Xóa ${itemName} thành công!`;
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+        toast.show();
+      }
+      userList[parseInt(curUser)].data.cart = userList[parseInt(curUser)].data.cart.filter(item => item.item !== itemId);
+      localStorage.setItem("userList", JSON.stringify(userList));
+      showCart();
+    };
+
+    var addShopItem = (itemId, itemName, event, increase = 1) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const stateToast = document.querySelector("#stateToast");
+      stateToast.src = "/sources/imgs/home/success.png"
+      const toastNotice = document.querySelector(".toast-body");
+      toastNotice.textContent = `Đang chờ ${itemName} được xác nhận!`;
+      const toast = new bootstrap.Toast(document.getElementById('liveToast'))
+      toast.show();
+      const userCart = userList[parseInt(curUser)].data.wait;
+      userCart.push({ item: itemId, quantity: parseInt(increase) });
+      localStorage.setItem("userList", JSON.stringify(userList));
+      delCartItem(itemId, itemName, event,false);
+      showCart()
+    }
+
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function showConfirmModal(idItem, nameProduct, event, quantity, price) {
+      const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+      confirmModal.show();
+      const modal = document.querySelector(".modal-body");
+      modal.innerHTML = `<div class="invoice-container">
+      <div class="invoice-header">
+          <h1>Hóa Đơn Mua Hàng</h1>
+          <img src="/sources/imgs/home/logo.ico.png" alt="Logo">
+      </div>
+      <div class="customer-info">
+          <p><strong>Tên Khách Hàng:</strong> ${userActive.fullName}</p>
+          <p><strong>Địa Chỉ:</strong> ${userActive.address}</p>
+          <p><strong>Số Điện Thoại:</strong> ${userActive.phoneNum}</p>
+          <p><strong>Email:</strong>  ${userActive.email}</p>
+      </div>
+
+      <!-- Bảng Sản Phẩm -->
+      <table class="table table-bordered">
+          <thead>
+              <tr>
+                  <th>Tên Sản Phẩm</th>
+                  <th>Số Lượng</th>
+                  <th>Giá Tiền</th>
+                  <th>Thành Tiền</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>${nameProduct}</td>
+                  <td>${quantity}</td>
+                  <td>${formatNumber(price)}</td>
+                  <td>${formatNumber(parseInt(price) * quantity)}</td>
+              </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                  <td colspan="3" class="text-end total">Tổng cộng</td>
+                  <td class="total">${formatNumber(parseInt(price) * quantity)}</td>
+              </tr>
+          </tfoot>
+      </table>
+  </div>`
+      document.getElementById('confirmBuy').onclick = () => {
+        addShopItem(idItem, nameProduct, event, quantity);
+        confirmModal.hide();
+      };
+    }
+  </script>
+</body>
+
+</html>

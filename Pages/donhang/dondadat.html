@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/sources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/sources/cssFolder/index.css" />
+  <link rel="stylesheet" href="/sources/fontawesome-free-5.12.1-web/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <script src="/sources/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+  <ul class="header__cart-list-item" style="max-height: fit-content;"></ul>
+  <script>
+    // Lấy danh sách user và sản phẩm
+    const userList = JSON.parse(window.localStorage.getItem("userList")) || [];
+    const productInfoList = JSON.parse(localStorage.getItem('productList')) || [];
+    const curUser = window.localStorage.getItem("currentUser");
+    let userActive = userList[parseInt(curUser)];
+
+    var showCart = () => {
+      let productOfCart = productInfoList.filter(product =>
+        userActive.data.paid.some(cartItem => cartItem.item === product.id)
+      );
+      const ulCart = document.querySelector('.header__cart-list-item');
+      ulCart.innerHTML = "";
+
+      if (productOfCart.length == 0) {
+        ulCart.innerHTML = `<h4 class="header__cart-heading text-center">Sản phẩm đã mua</h4>
+          <img src="/sources/imgs/home/cart-empty.png" alt="No cart" class="header__cart-list--no-cart header__cart-no-cart-img" />
+          <span class="header__cart-list--no-cart header__cart-no-cart-msg text-center">Chưa có sản phẩm</span>`;
+      } else {
+        for (let i = userActive.data.paid.length - 1; i >= 0; i--) {
+          let temp = productOfCart.find(product => product.id == userActive.data.paid[i].item);
+          let li = document.createElement('li');
+          li.classList.add("header__cart-item");
+          li.innerHTML = `
+          <img src="/sources/Data/${temp.id}/1.webp" alt="" class="header__cart-img" />
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${temp.nameProduct}</h5>
+              <div class="header__cart-item-price-wrap">
+                <span class="header__cart-item-price">${formatNumber(temp.price)} VND</span>
+                <span class="header__cart-item-multiply">x</span>
+                <span class="header__cart-item-cnt">${userActive.data.paid[i].quantity}</span>
+                <span class="header__cart-item-price"> = ${formatNumber(temp.price*userActive.data.paid[i].quantity)} VND</span>
+              </div>
+            </div>
+            <div class="header__cart-item-body">
+              <span class="header__cart-item-description">Phân loại: ${temp.type}</span>
+            </div>
+          </div>`;
+          ulCart.appendChild(li);
+        }
+      }
+    };
+    showCart()
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+  </script>
+</body>
+
+</html>

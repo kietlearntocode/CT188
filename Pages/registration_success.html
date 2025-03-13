@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Thành Công</title>
+    <link rel="shortcut icon" href="/sources/imgs/home/short-cut.png" type="image/x-icon">
+    <script>
+        const allowedOrigin = 'signup.html';  // Trang hợp lệ
+    
+        // Lấy tên file cuối cùng trong URL của referrer
+        const referrerFile = document.referrer ? document.referrer.split('/').pop() : '';
+    
+        if (referrerFile !== allowedOrigin) {
+            window.location.assign('signup.html');
+        }
+    </script>
+    
+    <style>
+        .body-custom {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #198754;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        .button {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0a58ca;
+        }
+    </style>
+</head>
+
+<body
+    style="height: 1200px; background-image: url(https://media.loveitopcdn.com/5002/uu-nhuoc-diem-cua-viec-lap-dat-nang-luong-mat-troi-03.jpg); background-position: center; background-repeat: no-repeat; background-size: cover;">
+    <nav>
+        <img src="../sources/imgs/home/logo.png" alt=""
+            style="width: 250px; height: 250px; margin-left: 150px; margin-top: -50px; cursor: pointer"
+            onclick="window.location.assign('../index.html')">
+    </nav>
+
+    <div class="body-custom">
+        <div class="container">
+            <h1>Đăng Ký Thành Công!</h1>
+            <p>Bạn đã hoàn tất quá trình đăng ký.Chân thành cảm ơn vì đã tin tưởng chúng tôi.</p>
+            <p>Chúc bạn có một trải nghiệm tuyệt vời cùng The Light.</p>
+            <a href="#" class="button" id="buttonGoToBack">Tiếp tục khám phá</a>
+        </div>
+    </div>
+    <script>
+        let currentPage = localStorage.getItem('currentPage') || "../index.html";
+        let buttonGoToBack = document.getElementById('buttonGoToBack');
+        buttonGoToBack.href = currentPage;
+    </script>
+</body>
+
+</html>
