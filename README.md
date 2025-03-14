@@ -6,5 +6,5 @@
 - vì phần âm thanh của chúng em hơi nhỏ nên mong thầy hãy đeo tai nghe để có trải nghiệm tốt nhất khi xem video demo.<br>
 </span>
 <h1>Video Demo</h1>
-[![Watch the video](https://img.youtube.com/vi/WjI8EgrKyOo/maxresdefault.jpg)](https://youtu.be/WjI8EgrKyOo)
+https://youtu.be/WjI8EgrKyOo
 
